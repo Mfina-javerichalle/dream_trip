@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>reservation</title>
+  <style>  
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  background: linear-gradient(to right, #f1f1f1, #e0e0e0);
+  line-height: 1.6;
+  color: #333;
+}
+
+/* ========== HEADER COMPLET ========== */
+header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.header-inner {
+  position: relative;
+  z-index: 2;
+  padding: 20px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.header-inner::before {
+  content: "";
+  position: absolute;
+  background: rgba(0, 0, 0, 0.6);
+  inset: 0;
+  z-index: 1;
+  pointer-events: none; /* ✅ CORRECTION CRITIQUE */
+}
+
+
+.Logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  z-index: 3;
+  position: relative;
+}
+
+.Logo img {
+  width: 45px;
+  height: 45px;
+}
+
+.Logo-text {
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 35px;
+  margin: 0;
+}
+
+nav li {
+  margin: 0;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  color: #ffd700;
+  background: rgba(255,215,0,0.15);
+  transform: translateY(-2px);
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 8px;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: white;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle:hover {
+  background: rgba(255,255,255,0.15);
+  transform: rotate(90deg);
+}
+
+/* ========== FORMULAIRE ========== */
+.formulaire-container {
+  background: white;
+  padding: 45px 35px;
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 550px;
+  margin: 60px auto;
+  position: relative;
+}
+
+.formulaire-container h2 {
+  text-align: center;
+  color: #1a1a1a;
+  margin-bottom: 30px;
+  font-size: 2.1rem;
+  font-weight: 700;
+}
+
+form label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #444;
+  font-size: 1rem;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"],
+form input[type="date"],
+form select {
+  width: 100%;
+  padding: 16px 20px;
+  margin-bottom: 22px;
+  border: 2px solid #e1e5e9;
+  border-radius: 12px;
+  font-size: 1rem;
+  background: #f8fafc;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+form input:focus,
+form select:focus {
+  outline: none;
+  border-color: #00aaff;
+  box-shadow: 0 0 0 4px rgba(0,170,255,0.1);
+  background: white;
+  transform: translateY(-2px);
+}
+
+form input[type="submit"] {
+  background: linear-gradient(135deg, #00aaff, #0088cc);
+  color: white;
+  border: none;
+  padding: 18px;
+  width: 100%;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+form input[type="submit"]:hover {
+  background: linear-gradient(135deg, #e69600, #cc7a00);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(230,150,0,0.4);
+}
+
+/* ========== FOOTER ========== */
+footer {
+  background: #000;
+  color: #fff;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 60px;
+}
+
+footer p {
+  margin: 12px 0;
+  opacity: 0.9;
+}
+
+.social-icons {
+  margin: 25px 0;
+}
+
+.social-icons a {
+  margin: 0 15px;
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #ffd700;
+  transform: translateY(-2px);
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 25px 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-links li {
+  margin: 5px 0;
+}
+
+.footer-links a {
+  color: #ccc;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footer-links a:hover,
+.social-icons a:hover {
+  color: #ffd700;
+}
+
+/* 🔧 CORRECTION MENU BURGER (AJOUTÉE) */
+nav {
+  position: relative;
+  z-index: 999;
+}
+
+.header-inner {
+  overflow: visible;
+}
+
+
+/* ========== RESPONSIVE COMPLET ========== */
+
+/* Tablettes (1024px) */
+@media (max-width: 1024px) {
+  .header-inner {
+    padding: 18px 40px;
+  }
+  
+  .Logo-text {
+    font-size: 1.6rem;
+  }
+  
+  nav ul {
+    gap: 25px;
+  }
+  
+  nav a {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
+  
+  .formulaire-container {
+    max-width: 90%;
+    margin: 50px auto;
+    padding: 40px 30px;
+  }
+}
+
+/* Tablettes portrait / Mobile paysage (768px) */
+@media (max-width: 768px) {
+  .header-inner {
+    padding: 16px 25px;
+  }
+
+  /* ✅ MENU BURGER ACTIF */
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Menu desktop caché */
+  nav ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 25px;
+    z-index: 1000;
+  }
+
+  /* Menu burger ouvert */
+  nav ul.show {
+    display: flex !important;
+    position: absolute;
+    top: 100%;
+    right: 25px;
+    background: rgba(0,0,0,0.95);
+    flex-direction: column;
+    width: 260px;
+    padding: 20px;
+    border-radius: 0 0 0 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    gap: 0;
+    backdrop-filter: blur(20px);
+  }
+
+  nav li {
+    width: 100%;
+    margin: 8px 0;
+  }
+
+  nav a {
+    display: block;
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    font-size: 1.05rem;
+  }
+
+  nav a:last-child {
+    border-bottom: none;
+  }
+
+  .formulaire-container {
+    max-width: 95%;
+    margin: 40px 20px;
+    padding: 35px 25px;
+  }
+
+  .formulaire-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+  }
+}
+
+/* Smartphones moyens (600px) */
+@media (max-width: 600px) {
+  .header-inner {
+    padding: 14px 20px;
+  }
+
+  .Logo-text {
+    font-size: 1.4rem;
+  }
+
+  .Logo img {
+    width: 40px;
+    height: 40px;
+  }
+
+  nav ul.show {
+    width: 240px;
+    right: 20px;
+  }
+
+  .formulaire-container {
+    margin: 35px 15px;
+    padding: 30px 22px;
+  }
+
+  .formulaire-container h2 {
+    font-size: 1.6rem;
+  }
+
+  form input,
+  form select {
+    padding: 15px 18px;
+    margin-bottom: 20px;
+  }
+
+  footer {
+    padding: 35px 15px;
+  }
+}
+
+/* Petits smartphones (480px) */
+@media (max-width: 480px) {
+  .header-inner {
+    padding: 12px 18px;
+  }
+
+  .menu-toggle {
+    font-size: 1.6rem;
+  }
+
+  nav ul.show {
+    width: 220px;
+    right: 18px;
+    padding: 18px;
+  }
+
+  .formulaire-container {
+    margin: 30px 12px;
+    padding: 28px 20px;
+  }
+
+  form input,
+  form select {
+    padding: 14px 16px;
+  }
+
+  form input[type="submit"] {
+    padding: 16px;
+    font-size: 1rem;
+  }
+
+  .footer-links {
+    gap: 15px;
+  }
+}
+
+/* Très petits écrans (iPhone SE - 360px) */
+@media (max-width: 360px) {
+  .header-inner {
+    padding: 10px 15px;
+  }
+
+  .Logo-text {
+    font-size: 1.25rem;
+  }
+
+  .Logo img {
+    width: 36px;
+    height: 36px;
+  }
+
+  nav ul.show {
+    width: 200px;
+    right: 15px;
+    padding: 15px;
+  }
+
+  nav a {
+    padding: 12px 15px;
+    font-size: 1rem;
+  }
+
+  .formulaire-container {
+    margin: 25px 10px;
+    padding: 25px 18px;
+  }
+
+  .formulaire-container h2 {
+    font-size: 1.4rem;
+  }
+
+  form label {
+    font-size: 0.95rem;
+  }
+
+  footer {
+    padding: 30px 12px;
+  }
+
+  .social-icons a {
+    font-size: 1.1rem;
+    margin: 0 12px;
+  }
+}
+
+
+</style>
+</head>
+<body>
+  
+<!-- HEADER -->
+  <header data-aos="zoom-in-right" data-aos-delay="200">
+    <div class="header-inner">
+      <div class="Logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/201/201623.png" alt="Logo DreamTrip" />
+        <strong><span class="Logo-text">DreamTrip</span></strong>
+      </div>
+
+      <!-- Bouton Burger -->
+      <button class="menu-toggle" id="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">
+        ☰
+      </button>
+
+      <!-- Menu principal -->
+      <nav id="nav-menu">
+        <ul>
+          <li><a href="Indes.html">Accueil</a></li>
+          <li><a href="A-propos.html">A propos</a></li>
+          <li><a href="Nos-services.html">Nos Services</a></li>
+          <li><a href="destinations.htm">Destinations</a></li>
+          <li><a href="Nos-chiffres.html">Chiffres clés</a></li>
+          <li><a href="locations.html">Locations Hotel Véhicules</a></li>
+          <li><a href="FAQ.html">FAQ</a></li>
+          <li><a href="temoignages.html">Témoignages</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Formulaire de réservation de pays -->
+<div class="formulaire-container">
+  <h2>Réservez votre voyage</h2>
+  <form action="#" method="post">
+    <label for="nom">Nom complet :</label>
+    <input type="text" id="nom" name="nom" required>
+
+    <label for="email">Email :</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="telephone">Téléphone :</label>
+    <input type="tel" id="telephone" name="telephone" required>
+
+    <label for="pays">Destination :</label>
+    <select id="pays" name="pays" required>
+      <option value="">-- Choisissez un pays --</option>
+      <option value="France">France</option>
+      <option value="Espagne">Espagne</option>
+      <option value="Italie">Italie</option>
+      <option value="Grèce">Grèce</option>
+      <option value="Portugal">Portugal</option>
+      <option value="Maroc">Maroc</option>
+      <option value="Tunisie">Tunisie</option>
+      <option value="Turquie">Turquie</option>
+    </select>
+
+    <label for="date">Date de départ :</label>
+    <input type="date" id="date" name="date" required>
+
+    <label for="nb_personnes">Nombre de voyageurs :</label>
+    <select id="nb_personnes" name="nb_personnes" required>
+      <option value="1">1 personne</option>
+      <option value="2">2 personnes</option>
+      <option value="3">3 personnes</option>
+      <option value="4">4 personnes</option>
+      <option value="5">5 personnes</option>
+      <option value="6+">6 personnes ou plus</option>
+    </select>
+
+    <input type="submit" value="Valider la réservation">
+  </form>
+</div>
+
+ <!--footer -->
+ <footer>
+  <p>Voyage Évasion, 10 Rue des Explorateurs, 75012 Paris. Tél : 01.23.45.67.89</p>
+
+  <div class="social-icons">
+    <a href="https://www.facebook.com/voyageevasion" target="_blank">🌐 Facebook</a>
+    <a href="https://www.instagram.com/voyageevasion" target="_blank">📸 Instagram</a>
+  </div>
+
+  <ul class="footer-links">
+    <li><a href="/mentions-legales.html">Mentions légales</a></li>
+    <li><a href="/politique-cookies.html">Politique de cookies</a></li>
+    <li><a href="/confidentialite.html">Politique de confidentialité</a></li>
+    <li><a href="/conditions-utilisation.html">Conditions d'utilisation</a></li>
+  </ul>
+
+  <p>© 2021-2025 par Globe Web Agency, agence web spécialisée voyage, SEO - SEA - SMO à Paris</p>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* ========== MENU BURGER (ROBUSTE) ========== */
+  const btn = document.getElementById('menu-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  const navList = navMenu ? navMenu.querySelector('ul') : null;
+
+  if (btn && navList) {
+
+    // État initial
+    btn.setAttribute('aria-expanded', 'false');
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+
+      const isOpen = navList.classList.contains('show');
+
+      if (isOpen) {
+        navList.classList.remove('show');
+        btn.textContent = '☰';
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        navList.classList.add('show');
+        btn.textContent = '✕';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // Fermer le menu si on clique ailleurs
+    document.addEventListener('click', function () {
+      navList.classList.remove('show');
+      btn.textContent = '☰';
+      btn.setAttribute('aria-expanded', 'false');
+    });
+
+    // Empêche la fermeture quand on clique dans le menu
+    navList.addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+
+    // Ferme le menu si on repasse en desktop
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768) {
+        navList.classList.remove('show');
+        btn.textContent = '☰';
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* ========== AUTO-SÉLECTION DESTINATION ========== */
+  const selectedDestination = localStorage.getItem("selectedDestination");
+  if (selectedDestination) {
+    const selectElement = document.getElementById("pays");
+    if (selectElement) {
+      selectElement.value = selectedDestination;
+    }
+    localStorage.removeItem("selectedDestination");
+  }
+
+});
+</script>
+
+
+
+
+</body>
+</html>

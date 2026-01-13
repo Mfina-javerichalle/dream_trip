@@ -1,0 +1,1896 @@
+ *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
+
+
+
+header {
+  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1950&q=80') center center / cover no-repeat;
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Overlay sombre */
+header::before {
+  content: "";
+  position: absolute;
+  background: rgba(0, 0, 0, 0.3);
+  inset: 0;
+  z-index: 0;
+}
+
+/* Barre supérieure (logo + menu) */
+.header-inner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Logo */
+
+.Logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+
+.Logo img {
+  width: 35px;
+  height: 35px;
+}
+
+.Logo-text {
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+/* NAV desktop */
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+}
+
+nav li {
+  margin: 0;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+nav a:hover,
+nav a.active {
+  color: #ffd700;
+}
+
+/* MENU BURGER */
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.3s;
+}
+
+.menu-toggle:hover {
+  transform: rotate(90deg);
+}
+
+/* Bannière */
+
+.banner-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+  margin-top: 120px; /* pour ne pas passer sous le header fixe */
+}
+
+.banner-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.banner-content p {
+  font-size: 1.2rem;
+  max-width: 700px;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  margin-bottom: 25px;
+}
+
+/* Style général pour tous les liens/boutons (si tu le veux global) */
+a {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Bouton Réserver */
+
+.double-bordure {
+  width: 30vh;
+  height: 8vh;
+  border: 4px double #333;
+  color: white;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 6vh;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.double-bordure:hover {
+  background-color: #ffffff20;
+  color: #000000;
+  border-color: #00aaff;
+}
+
+/* ===== RESPONSIVE : MENU BURGER ===== */
+@media (max-width: 768px) {
+  .header-inner {
+    padding: 15px 20px;
+  }
+
+  /* Afficher le burger */
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Cacher le menu par défaut */
+ nav ul {
+  display: none;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.5); /* noir à 50% de transparence */
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  width: 220px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+
+  nav ul.show {
+    display: flex;
+  }
+
+  nav li {
+    margin: 10px 0;
+  }
+
+  nav a {
+      color:white;
+  }
+
+  nav a:hover,
+  nav a.active {
+      color: #ffd700;
+  }
+
+  .banner-content {
+    margin-top: 140px;
+  }
+}
+
+/* Petits écrans supplémentaires si besoin */
+@media (max-width: 480px) {
+  .Logo-text {
+    font-size: 1.4rem;
+  }
+
+  .banner-content h1 {
+    font-size: 2.2rem;
+  }
+}
+
+/* SECTION À PROPOS */
+.A-propos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 50px;
+  background-color: #ffffff;
+  gap: 30px;
+}
+
+.A-propos-text {
+  flex: 1 1 300px;
+  padding-right: 30px;
+}
+
+.A-propos-text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #0a0a0a;
+}
+
+.A-propos-text p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #000;
+}
+
+.A-propos-Image {
+  flex: 1 1 300px;
+  text-align: right;
+}
+
+.A-propos-Image img {
+  max-width: 90%;
+  border-radius: 10px;
+  height: auto;
+}
+
+/* Variante about */
+.about {
+  background-color: white;
+  color: #111;
+  padding: 60px 40px;
+}
+
+.about-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.about-content .text {
+  flex: 1 1 300px;
+  min-width: 280px;
+}
+
+.about-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.about-content p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #444;
+}
+
+.about-content .image {
+  flex: 1 1 300px;
+  min-width: 280px;
+}
+
+.about-content .image img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  height: auto;
+}
+
+/* ========== RESPONSIVE COMPLET ========== */
+
+/* Tablettes / petits laptops (1024px) */
+@media (max-width: 1024px) {
+  .A-propos {
+    padding: 40px 30px;
+  }
+
+  .A-propos-text {
+    padding-right: 20px;
+  }
+
+  .about {
+    padding: 40px 25px;
+  }
+
+  .about-content {
+    gap: 40px;
+  }
+}
+
+/* Tablettes portrait / grands mobiles (768px) */
+@media (max-width: 768px) {
+  .A-propos {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
+    gap: 30px;
+  }
+
+  .A-propos-text {
+    padding-right: 0;
+    order: 1;
+  }
+
+  .A-propos-Image {
+    text-align: center;
+    order: 2;
+  }
+
+  .A-propos-Image img {
+    max-width: 100%;
+  }
+
+  .A-propos-text h2 {
+    font-size: 2rem;
+  }
+
+  .about {
+    padding: 40px 20px;
+  }
+
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 35px;
+  }
+
+  .about-content .image {
+    text-align: center;
+    order: 2;
+  }
+
+  .about-content .text {
+    order: 1;
+  }
+
+  .about-content .image img {
+    max-width: 100%;
+  }
+
+  .about-content h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Smartphones moyens (600px) */
+@media (max-width: 600px) {
+  .A-propos {
+    padding: 35px 18px;
+  }
+
+  .A-propos-text h2 {
+    font-size: 1.8rem;
+  }
+
+  .A-propos-text p {
+    font-size: 1.05rem;
+  }
+
+  .about {
+    padding: 35px 18px;
+  }
+
+  .about-content h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Petits smartphones (480px) */
+@media (max-width: 480px) {
+  .A-propos {
+    padding: 30px 15px;
+    gap: 25px;
+  }
+
+  .A-propos-text h2 {
+    font-size: 1.6rem;
+  }
+
+  .A-propos-text p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .about {
+    padding: 30px 15px;
+  }
+
+  .about-content {
+    gap: 30px;
+  }
+
+  .about-content h2 {
+    font-size: 1.6rem;
+  }
+
+  .about-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+/* Très petits écrans (iPhone SE, 360px) */
+@media (max-width: 360px) {
+  .A-propos {
+    padding: 25px 12px;
+    gap: 20px;
+  }
+
+  .A-propos-text h2 {
+    font-size: 1.4rem;
+  }
+
+  .A-propos-text p {
+    font-size: 0.95rem;
+  }
+
+  .about {
+    padding: 25px 12px;
+  }
+
+  .about-content {
+    gap: 25px;
+  }
+
+  .about-content h2 {
+    font-size: 1.4rem;
+  }
+
+  .about-content p {
+    font-size: 0.95rem;
+  }
+}
+
+ 
+
+  /* ========== CARACTÉRISTIQUES ========== */
+.caracteristiques {
+  background-color: #fff;
+  padding: 80px 50px;
+  text-align: center;
+  color: #000;
+}
+
+/* REMPLACE cette partie dans ton CSS */
+.caracteristiques-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* ✅ CARTES IDENTIQUES */
+.caracteristiques-card {
+  background: #f9f9f9;
+  border-radius: 16px;
+  padding: 30px 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  /* ✅ TAILLE FIXE identique pour TOUTES les cartes */
+  width: 250px;
+  height: 200px; /* hauteur fixe */
+  flex-shrink: 0; /* empêche le rétrécissement */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.caracteristiques-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2); /* Corrigé: 0 au lieu de O */
+}
+
+.caracteristiques-card i {
+  font-size: 2.5rem;
+  color: #00aaff;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.caracteristiques-card h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.caracteristiques-card p {
+  font-size: 0.9rem; /* Amélioré de 0.75rem */
+  color: #555;
+  line-height: 1.4;
+}
+
+/* ========== DESTINATIONS ========== */
+.destinations {
+  background-color: #fff;
+  color: #333;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.destinations-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.destinations-header p {
+  font-size: 1.1rem;
+  margin-bottom: 50px;
+  color: #555;
+}
+
+.destinations-header i {
+  font-size: 2.5rem;
+  color: #00aaff;
+}
+
+/* Slider */
+.slider {
+  overflow: hidden;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto 60px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.slide {
+  display: flex;
+  width: 400%;
+  animation: slide 12s infinite;
+}
+
+.slide img {
+  width: 25%; /* 4 slides pour 400% */
+  object-fit: cover;
+}
+
+@keyframes slide {
+  0%   { transform: translateX(0); }
+  25%  { transform: translateX(-25%); }
+  50%  { transform: translateX(-50%); }
+  75%  { transform: translateX(-75%); }
+  100% { transform: translateX(0); }
+}
+
+/* ========== RESPONSIVE COMPLET ========== */
+
+/* Tablettes (1024px) */
+@media (max-width: 1024px) {
+  .caracteristiques-card {
+    width: 260px;
+    height: 220px;
+  }
+
+  .caracteristiques-container {
+    gap: 25px;
+  }
+
+  .destinations {
+    padding: 60px 15px;
+  }
+}
+
+
+/* Mobile / Tablettes portrait (768px) */
+@media (max-width: 768px) {
+  .caracteristiques {
+    padding: 50px 20px;
+  }
+
+  .caracteristiques-container {
+    gap: 20px;
+  }
+
+  
+  .caracteristiques-card {
+    width: 260px;
+    height: 220px;
+    padding: 25px 15px;
+  }
+
+ 
+
+  .caracteristiques-card i {
+    font-size: 2.2rem;
+  }
+
+  .caracteristiques-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .caracteristiques-card p {
+    font-size: 0.85rem;
+  }
+
+  .destinations {
+    padding: 50px 15px;
+  }
+
+  .destinations-header h2 {
+    font-size: 2rem;
+  }
+
+  .destinations-header p {
+    font-size: 1rem;
+    margin-bottom: 40px;
+  }
+
+  .destinations-header i {
+    font-size: 2.2rem;
+  }
+
+  .slider {
+    max-width: 95%;
+    margin-bottom: 40px;
+  }
+}
+
+/* Smartphones moyens (600px) */
+@media (max-width: 600px) {
+  .caracteristiques {
+    padding: 40px 15px;
+  }
+
+   .caracteristiques-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+  
+  .caracteristiques-card {
+    width: 300px; /* pleine largeur */
+    height: 240px;
+    max-width: 90vw;
+  }
+
+  .destinations {
+    padding: 40px 12px;
+  }
+
+  .destinations-header h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Petits smartphones (480px) */
+@media (max-width: 480px) {
+  .caracteristiques {
+    padding: 30px 12px;
+  }
+
+  .caracteristiques-card {
+    width: 280px;
+    height: 220px;
+    padding: 20px 12px;
+  }
+}
+
+  .caracteristiques-card i {
+    font-size: 2rem;
+  }
+
+  .caracteristiques-card h3 {
+    font-size: 1rem;
+  }
+
+  .caracteristiques-card p {
+    font-size: 0.8rem;
+  }
+
+  .destinations {
+    padding: 30px 10px;
+  }
+
+  .destinations-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .destinations-header p {
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+  }
+
+  .slider {
+    border-radius: 8px;
+  }
+
+
+/* Très petits écrans (360px - iPhone SE) */
+@media (max-width: 360px) {
+  .caracteristiques {
+    padding: 25px 8px;
+  }
+
+  .caracteristiques-container {
+    gap: 20px;
+  }
+
+  .caracteristiques-card {
+    padding: 18px 10px;
+  }
+
+  .caracteristiques-card i {
+    font-size: 1.8rem;
+  }
+
+  .destinations {
+    padding: 25px 8px;
+  }
+
+  .destinations-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .destinations-header i {
+    font-size: 2rem;
+  }
+
+  .slider {
+    margin-bottom: 30px;
+  }
+}
+
+
+/* Cards Destinations */
+.destination-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.destination-cards .card {
+  background: #f9f9f9;
+  border-radius: 16px;
+  padding: 20px;
+  width: 300px;
+  max-width: 100%;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+  text-align: left;
+  transition: transform 0.3s ease;
+  flex: 1 1 280px;
+}
+
+.destination-cards .card:hover {
+  transform: translateY(-5px);
+}
+
+.destination-cards .card img {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.destination-cards .card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.destination-cards .card p {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.destination-cards .price {
+  font-weight: bold;
+  color: #222;
+  display: block;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.destination-cards .btn-reserver {
+  background-color: #00aaff;
+  text-decoration: none;
+  border: none;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  text-align: center;
+}
+
+.destination-cards .btn-reserver:hover {
+  background-color: #e69600;
+}
+
+/* ========== CHIFFRES ========== */
+.Nos-chiffres {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+}
+
+.figures {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 40px;
+  color: #000;
+}
+
+.figure-item {
+  flex: 1 1 200px;
+  max-width: 250px;
+}
+
+.figure-item strong {
+  font-size: 2rem;
+  color: #00aaff;
+  display: block;
+}
+
+.figure-item span {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Titres */
+#titre1 {
+  padding-top: 40px;
+  color: #555;
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+#titre2 {
+  color: #555;
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+#titre {
+  color: #555;
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+/* ========== RESPONSIVE COMPLET ========== */
+
+/* Tablettes */
+@media (max-width: 1024px) {
+  .destinations {
+    padding: 60px 15px;
+  }
+
+  .destinations-header h2 {
+    font-size: 2.2rem;
+  }
+
+  .slider {
+    max-width: 90%;
+  }
+
+  .Nos-chiffres {
+    padding: 50px 15px;
+  }
+}
+
+/* Mobile / Tablettes portrait */
+@media (max-width: 768px) {
+  .destinations {
+    padding: 50px 15px;
+  }
+
+  .destinations-header h2 {
+    font-size: 2rem;
+  }
+
+  .destinations-header p {
+    margin-bottom: 40px;
+    font-size: 1rem;
+  }
+
+  .destinations-header i {
+    font-size: 2rem;
+  }
+
+  .slider {
+    max-width: 95%;
+    margin-bottom: 40px;
+    border-radius: 8px;
+  }
+
+  .destination-cards {
+    gap: 20px;
+  }
+
+  /* ✅ CARTES PLUS HAUTES + MOINS LARGES */
+  .destination-cards .card {
+    width: 90%;
+    max-width: 320px;  /* réduit */
+    min-height: 420px; /* plus haute */
+    padding: 20px 16px;
+  }
+
+  .destination-cards .card img {
+    height: 200px; /* plus haute */
+  }
+
+  .destination-cards .card h3 {
+    font-size: 1.2rem;
+  }
+
+  .Nos-chiffres {
+    padding: 40px 15px;
+  }
+
+  .figures {
+    gap: 30px;
+  }
+
+  #titre1,
+  #titre {
+    font-size: 2rem;
+  }
+}
+
+/* Smartphones moyens */
+@media (max-width: 600px) {
+  .destinations {
+    padding: 40px 12px;
+  }
+
+  .destinations-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .slider {
+    border-radius: 6px;
+  }
+
+  /* ✅ MAINTIEN PLUS HAUTE */
+  .destination-cards .card {
+    padding: 18px 14px;
+  }
+
+  .destination-cards .card img {
+    height: 180px;
+  }
+}
+
+/* Petits smartphones */
+@media (max-width: 480px) {
+  .destinations {
+    padding: 30px 10px;
+  }
+
+  .destinations-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .destinations-header p {
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+  }
+
+  .destination-cards {
+    gap: 15px;
+  }
+
+  /* ✅ CARTES PLUS HAUTES + PLUS ÉTROITES */
+  .destination-cards .card {
+    width: 95%;
+    max-width: 300px;  /* encore plus étroit */
+    min-height: 400px; /* haute */
+    padding: 16px 12px;
+  }
+
+  .destination-cards .card img {
+    height: 170px;
+  }
+
+  .destination-cards .card h3 {
+    font-size: 1.1rem;
+  }
+
+  .destination-cards .card p {
+    font-size: 0.9rem;
+  }
+
+  .Nos-chiffres {
+    padding: 30px 10px;
+  }
+
+  /* ✅ CHIFFRES PARFAITEMENT CENTRÉS */
+  .figures {
+    gap: 25px;
+    flex-direction: column;
+    align-items: center; /* ✅ CENTRE */
+    justify-content: center; /* ✅ CENTRE */
+  }
+
+  .figure-item {
+    max-width: 200px;
+    text-align: center; /* ✅ CENTRE */
+  }
+
+  #titre1,
+  #titre {
+    font-size: 1.6rem;
+  }
+
+  #titre2 {
+    font-size: 0.9rem;
+  }
+}
+
+/* Très petits écrans (iPhone SE, etc.) */
+@media (max-width: 360px) {
+  .destinations {
+    padding: 25px 8px;
+  }
+
+  .destinations-header h2 {
+    font-size: 1.4rem;
+  }
+
+  /* ✅ CARTES ADAPTÉES iPhone SE */
+  .destination-cards .card {
+    max-width: 280px;
+    min-height: 380px;
+    padding: 14px 10px;
+  }
+
+  .destination-cards .card img {
+    height: 150px;
+  }
+
+  .Nos-chiffres {
+    padding: 25px 8px;
+  }
+
+  /* ✅ CHIFFRES CENTRÉS SUR TRÈS PETITS ÉCRANS */
+  .figures {
+    gap: 20px;
+  }
+
+  .figure-item {
+    max-width: 180px;
+  }
+
+  #titre1,
+  #titre {
+    font-size: 1.4rem;
+  }
+}
+
+
+
+/* ========== HÔTELS ========== */
+
+.Hôtels-propos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 50px;
+  background-color: #ffffff;
+  gap: 30px;
+}
+
+.Hôtels-text {
+  flex: 1 1 300px;
+  padding-right: 30px;
+}
+
+.Hôtels-text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #0a0a0a;
+}
+
+.Hôtels-text p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #000;
+}
+
+.Hôtels-Image {
+  flex: 1 1 300px;
+  text-align: right;
+}
+
+.Hôtels-Image img {
+  max-width: 90%;
+  border-radius: 10px;
+}
+
+/* Variante Hôtel */
+.Hôtel {
+  background-color: white;
+  color: #111;
+  padding: 60px 40px;
+}
+
+.Hôtel-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.Hôtel-content .text {
+  flex: 1 1 300px;
+  min-width: 280px;
+}
+
+.Hôtel-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.Hôtel-content p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #444;
+}
+
+.Hôtel-content .image {
+  flex: 1 1 300px;
+  min-width: 280px;
+}
+
+.Hôtel-content .image img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* ========== VOITURES ========== */
+
+.Car {
+  background-color: #fff;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.text-Car {
+  flex: 1 1 300px;
+  text-align: left;
+  padding-right: 20px;
+}
+
+.text-Car h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.text-Car p {
+  color: #222;
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+}
+
+.Photo-Car {
+  flex: 1 1 300px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.Photo-Car img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.Photo-Car img:active {
+  transform: translateY(-7px);
+}
+
+.Photo-Car h4 {
+  color: #333;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Boutons */
+button,
+.BOUTTON {
+  display: inline-block;
+  margin-top: 20px;
+  background-color: #00aaff;
+  text-decoration: none;
+  border: none;
+  color: #000;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover,
+.BOUTTON:hover {
+  background-color: #0088cc;
+}
+
+/* ========== RESPONSIVE COMPLET ========== */
+
+/* Tablettes (1024px) */
+@media (max-width: 1024px) {
+  .Hôtels-propos,
+  .Hôtel {
+    padding: 40px 30px;
+  }
+
+  .Hôtels-text {
+    padding-right: 20px;
+  }
+
+  .Hôtel-content {
+    gap: 40px;
+  }
+
+  .Car {
+    padding: 40px 30px;
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .Photo-Car {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+/* Tablettes portrait / Petits mobiles (768px) */
+@media (max-width: 768px) {
+  .Hôtels-propos {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
+    gap: 30px;
+    max-width: 100%;
+  }
+
+  .Hôtels-text {
+    padding-right: 0;
+  }
+
+  .Hôtels-Image {
+    text-align: center;
+  }
+
+  .Hôtels-Image img {
+    max-width: 90%;
+    height: auto;
+  }
+
+  .Hôtels-text h2 {
+    font-size: 2rem;
+  }
+
+  .Hôtel {
+    padding: 40px 20px;
+  }
+
+  .Hôtel-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+    max-width: 100%;
+  }
+
+  .Hôtel-content .image {
+    text-align: center;
+  }
+
+  .Hôtel-content .image img {
+    max-width: 90%;
+    height: auto;
+  }
+
+  .Hôtel-content h2 {
+    font-size: 2rem;
+  }
+
+  .Car {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
+    gap: 30px;
+    max-width: 100%;
+  }
+
+  .text-Car {
+    padding-right: 0;
+    text-align: center;
+    max-width: 90%;
+  }
+
+  .text-Car h2 {
+    font-size: 1.8rem;
+  }
+
+  /* ✅ PLUS HAUTE + PLUS ÉTROITE */
+  .Photo-Car {
+    grid-template-columns: 1fr;
+    width: 90%; /* réduit */
+    max-width: 320px; /* largeur contrôlée */
+    gap: 15px;
+    margin: 0 auto;
+  }
+
+  .Photo-Car img {
+    height: 200px; /* plus haute */
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Smartphones moyens (600px) */
+@media (max-width: 600px) {
+  .Hôtels-propos,
+  .Hôtel,
+  .Car {
+    padding: 30px 15px;
+  }
+
+  .Hôtels-text h2,
+  .Hôtel-content h2 {
+    font-size: 1.8rem;
+  }
+
+  .text-Car h2 {
+    font-size: 1.6rem;
+  }
+
+  .text-Car p {
+    font-size: 1.1rem;
+  }
+
+  .Photo-Car {
+    width: 85%;
+    max-width: 300px;
+  }
+
+  .Photo-Car img {
+    height: 190px;
+  }
+}
+
+/* Petits smartphones (480px) */
+@media (max-width: 480px) {
+  .Hôtels-propos,
+  .Hôtel {
+    padding: 25px 12px;
+  }
+
+  .Car {
+    padding: 25px 12px;
+  }
+
+  .Hôtels-text p,
+  .Hôtel-content p,
+  .text-Car p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .Hôtels-text h2,
+  .Hôtel-content h2 {
+    font-size: 1.6rem;
+  }
+
+  .text-Car h2 {
+    font-size: 1.4rem;
+  }
+
+  /* ✅ PLUS HAUTE + PLUS ÉTROITE SANS DÉBORDement */
+  .Photo-Car {
+    width: 90%;
+    max-width: 280px;
+    gap: 12px;
+  }
+
+  .Photo-Car img {
+    height: 180px; /* plus haute */
+  }
+
+  button,
+  .BOUTTON {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+/* Très petits écrans (360px - iPhone SE) */
+@media (max-width: 360px) {
+  .Hôtels-propos,
+  .Hôtel,
+  .Car {
+    padding: 20px 10px;
+  }
+
+  .Hôtels-text h2,
+  .Hôtel-content h2 {
+    font-size: 1.4rem;
+  }
+
+  .text-Car h2 {
+    font-size: 1.3rem;
+  }
+
+  .Photo-Car {
+    width: 92%;
+    max-width: 260px;
+    gap: 10px;
+  }
+
+  .Photo-Car img {
+    height: 160px; /* toujours haute mais adaptée */
+  }
+
+  button,
+  .BOUTTON {
+    padding: 9px 18px;
+    font-size: 0.9rem;
+  }
+
+  .Hôtels-Image img,
+  .Hôtel-content .image img {
+    max-width: 85%;
+  }
+}
+
+
+
+
+/* ========== FAQ ========== */
+.FAQ {
+  max-width: 800px;
+  margin: 80px auto;
+  padding: 20px;
+  color: #0c0c0c;
+  background: #f8f5f5;
+  border-radius: 12px;
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+}
+
+.faq-item {
+  border-top: 1px solid #e0e0e0;
+}
+
+.faq-question {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  color: #444;
+  transition: background 0.2s ease;
+}
+
+.faq-question::after {
+  content: '+';
+  position: absolute;
+  right: 30px;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease; /* Corrigé: transform */
+}
+
+.faq-question.active::after {
+  content: '-';
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  background: #e2e0e0;
+  transition: max-height 0.4s ease, padding 0.3s ease; /* Corrigé: padding */
+  padding: 0 20px;
+}
+
+.faq-answer p {
+  padding: 15px 0;
+  line-height: 1.6rem;
+  margin: 0;
+}
+
+.faq-question.active + .faq-answer {
+  max-height: 200px;
+  padding: 20px;
+}
+
+/* ========== TÉMOIGNAGES ========== */
+.Temoignages {
+  padding: 60px 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.Temoignages-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  color: #000;
+  padding-top: 30px;
+}
+
+.Cards {
+  background-color: #fafafa;
+  max-width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s ease;
+  flex: 1 1 280px;
+}
+
+.Cards p {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.Cards h4 {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000;
+  margin: 0;
+}
+
+.Cards h4 span {
+  font-style: italic;
+  font-weight: normal;
+  color: #666;
+}
+
+.Cards:hover {
+  transform: translateY(-7px);
+}
+
+.T-items {
+  font-size: 4rem;
+  color: #00aaff;
+}
+
+/* ========== CONTACT ========== */
+.contact-section {
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+label {
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.contact-section h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.contact-form {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #3c9c8d;
+  box-shadow: 0 0 0 3px rgba(60, 156, 141, 0.1);
+}
+
+.contact-form button {
+  padding: 12px;
+  background-color: #00aaff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: #2f7f73;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 30px 20px;
+  font-family: Arial, sans-serif;
+}
+
+footer p {
+  margin: 10px 0;
+}
+
+.social-icons a {
+  margin: 0 10px;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-links li {
+  margin: 5px 0;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover,
+.social-icons a:hover {
+  color: #ffd700;
+}
+
+/* ========== RESPONSIVE COMPLET ========== */
+
+/* Tablettes */
+@media (max-width: 1024px) {
+  .FAQ {
+    margin: 60px 20px;
+    padding: 15px;
+  }
+
+  .Temoignages {
+    padding: 50px 15px;
+  }
+
+  .contact-section {
+    padding: 50px 15px;
+  }
+}
+
+/* Mobile / Tablettes portrait */
+@media (max-width: 768px) {
+  .FAQ {
+    margin: 40px 15px;
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  .faq-question {
+    padding: 18px 15px;
+    font-size: 1rem;
+  }
+
+  .faq-question::after {
+    right: 15px;
+    font-size: 1.3rem;
+  }
+
+  .faq-answer {
+    padding: 0 15px;
+  }
+
+  .Temoignages {
+    padding: 40px 15px;
+  }
+
+  .Temoignages-cards {
+    gap: 20px;
+  }
+
+  .Cards {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .contact-section {
+    padding: 40px 15px;
+  }
+
+  .contact-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .contact-form {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  footer {
+    padding: 25px 15px;
+  }
+
+  .footer-links {
+    gap: 15px;
+  }
+}
+
+/* Smartphones moyens */
+@media (max-width: 600px) {
+  .FAQ {
+    margin: 30px 10px;
+  }
+
+  .faq-question {
+    font-size: 0.95rem;
+    padding: 16px 12px;
+  }
+
+  .T-items {
+    font-size: 3rem;
+  }
+
+  .contact-section h2 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Petits smartphones */
+@media (max-width: 480px) {
+  .FAQ {
+    margin: 25px 8px;
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .faq-question {
+    padding: 14px 10px;
+    font-size: 0.9rem;
+  }
+
+  .Temoignages {
+    padding: 30px 10px;
+  }
+
+  .Cards {
+    padding: 16px;
+  }
+
+  .Cards p,
+  .Cards h4 {
+    font-size: 0.95rem;
+  }
+
+  .contact-section {
+    padding: 30px 10px;
+  }
+
+  .contact-section h2 {
+    font-size: 1.4rem;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 0.95rem;
+    padding: 10px 12px;
+  }
+
+  footer {
+    padding: 20px 10px;
+  }
+
+  .social-icons a {
+    font-size: 16px;
+  }
+}
+
+/* Très petits écrans (iPhone SE, etc.) */
+@media (max-width: 360px) {
+  .FAQ {
+    margin: 20px 5px;
+    padding: 10px;
+  }
+
+  .faq-question {
+    padding: 12px 8px;
+    font-size: 0.85rem;
+  }
+
+  .faq-question::after {
+    font-size: 1.2rem;
+  }
+
+  .T-items {
+    font-size: 2.5rem;
+  }
+
+  .Cards {
+    padding: 14px;
+  }
+
+  .contact-section h2 {
+    font-size: 1.3rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

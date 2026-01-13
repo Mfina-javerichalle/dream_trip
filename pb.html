@@ -1,0 +1,145 @@
+ <!-- HEADER -->
+   <header data-aos="zoom-in-right" data-aos-delay="200">
+
+     <div class="Logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/201/201623.png" alt="Logo" />
+        <strong><span class="Logo-text">DreamTrip</span></strong>
+    </div>
+      <!-- Bouton Burger -->
+      <button class="menu-toggle" aria-label="Menu">☰</button>
+     <!-- Menu principal -->
+     <nav id="nav-menu">
+       <ul>
+         <li><a href="Indes.html">Accueil</a></li>
+         <li><a href="A-propos.html">A propos</a></li>
+         <li><a href="Nos-services.html">Nos Services</a></li>
+         <li><a href="destinations.htm">Destinations</a></li>
+         <li><a href="Nos-chiffres.html">Chiffres clés</a></li>
+         <li><a href="locations.html">Locations Hotel Vehicules</a></li>
+         <li><a href="FAQ.html">FAQ</a></li>
+         <li><a href="temoignages.html">Témoignages</a></li>
+         <li><a href="contact.html">Contact</a></li>
+       </ul>
+     </nav>
+
+  <!-- Bannière -->
+  <div id="Accueil" class="banner-content" data-aos="fade-up-right" data-aos-delay="200">
+    <div>
+      <h1>Voyagez vers vos rêves</h1>
+      <p>Explorez des destinations inoubliables, réservez vos vacances parfaites et vivez l'aventure avec DreamTrip.</p>
+      <a href="reservation.html" class="double-bordure">Réserver</a>
+    </div>
+  </div>
+</header>
+
+
+
+
+
+ header{
+    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1950&q=80') center center / cover no-repeat;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+ }
+ header::before{
+    content: "";   
+    position: absolute;
+    background: rgba(0, 0, 0, 0.3) ;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+ }
+ nav{
+    background: rgba(0, 0, 0, 0.5) ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    z-index: 1;
+ }
+ .Logo{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+
+    img{
+        width: 45px;
+        height: 45px;
+    }
+ }
+ .Logo-text{
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+ }
+ .Nav-links{
+    display: flex;
+    gap: 15px;
+
+    a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: color 0.3 ease ;
+     }
+
+     a:hover{
+        color: #ffd700;
+     }
+  }
+
+  /* Bouton burger (caché par défaut) */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+  padding: 5px;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+  
+  .Nav-links {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    flex-direction: column;
+    gap: 0;
+    padding: 1.5rem;
+    width: 250px;
+    box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.5);
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .Nav-links.open {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .Nav-links a {
+    width: 100%;
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .Nav-links a:last-child {
+    border-bottom: none;
+  }
+}

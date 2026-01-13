@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Locations</title>
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>  /* ========== HEADER COMPLET ========== */
+    header {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      background: rgba(0, 0, 0, 0.6);
+      inset: 0;
+      z-index: 1;
+    }
+
+    .header-inner {
+      position: relative;
+      z-index: 2;
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .Logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+    }
+
+    .Logo img {
+      width: 45px;
+      height: 45px;
+    }
+
+    .Logo-text {
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    nav ul {
+  display: none;
+  flex-direction: column;
+  background-color: rgba(92, 90, 90, 0.4); /* noir à 50% de transparence */
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  width: 220px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+    nav li {
+      margin: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ffd700;
+      transform: translateY(-2px);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: white;
+      padding: 8px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+      background: rgba(255,255,255,0.1);
+      transform: rotate(90deg);
+    }
+</style>
+</head>
+<body>
+  
+<!-- Hôtels -->
+<section class="Hôtels" id="locations">
+    <h2 id="titre1" data-aos="fade-up" data-aos-delay="600"> Location Hôtels & voitures  </h2>
+    <p id="titre2" data-aos="fade-up" data-aos-delay="700">Découvrez nos plus beaux hôtels </p>
+
+    <div class="Hôtels-propos">
+      <div class="Hôtels-text"  data-aos="fade-left" data-aos-delay="700">
+        <h2>Congo Brazzaville</h2>
+        <p>Passez vos plus belles nuit dans nos meilleures hôtels</p>
+      </div>
+
+ <header data-aos="zoom-in-right" data-aos-delay="200">
+    <div class="header-inner">
+      <div class="Logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/201/201623.png" alt="Logo DreamTrip" />
+        <strong><span class="Logo-text">DreamTrip</span></strong>
+      </div>
+
+      <!-- Bouton Burger -->
+      <button class="menu-toggle" id="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">
+        ☰
+      </button>
+
+      <!-- Menu principal -->
+      <nav id="nav-menu">
+        <ul>
+          <li><a href="Indes.html">Accueil</a></li>
+          <li><a href="A-propos.html">A propos</a></li>
+          <li><a href="Nos-services.html">Nos Services</a></li>
+          <li><a href="destinations.htm">Destinations</a></li>
+          <li><a href="Nos-chiffres.html">Chiffres clés</a></li>
+          <li><a href="locations.html">Locations Hotel Véhicules</a></li>
+          <li><a href="FAQ.html">FAQ</a></li>
+          <li><a href="temoignages.html">Témoignages</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+      <div class="Hôtels-Image" data-aos="fade-right" data-aos-delay="900">
+        <img src="https://media.iceportal.com/113928/photos/62716664_XL.jpg" alt="À propos" width="800px" height="300px">       
+      </div>
+   </div>
+
+    <div class="Hôtels-propos">
+     <div class="Hôtels-text"  data-aos="fade-left" data-aos-delay="700">
+       <h2>Marseilles</h2>
+       <p>Venez passer des avantures inoubliables</p>
+     </div>
+
+     <div class="Hôtels-Image" data-aos="fade-right" data-aos-delay="900">
+       <img src="https://www.liligo.fr/magazine-voyage/wp-content/uploads/sites/42/2016/03/Marseille-header-iStock.jpg" alt="À propos"  width="800px" height="300px">       
+     </div>
+   </div>
+
+    <div class="Hôtel">
+      <div class="Hôtel-content">
+       <div class="image" data-aos="fade-left" data-aos-delay="1100">
+         <img src="https://cloud.famproperties.com/fam/blog/493-161442.jpg493-161442.jpg493-161443.jpg493-161443.jpg" alt="À propos" width="800px" height="300px">
+       </div>
+
+       <div class="text"  data-aos="fade-right" data-aos-delay="1300">
+         <h2>Chypre</h2>
+         <p> Allos réaliser vos reves les plus foux</p>
+       </div>
+     </div>
+    </div>
+
+   <div class="Hôtel">
+     <div class="Hôtel-content">
+       <div class="image" data-aos="fade-left" data-aos-delay="1100">
+         <img src="https://www.hilton.com/im/en/NYCFDHF/15920061/nycfdhf-sandbar-4-1.jpg?impolicy=crop&cw=5000&ch=2799&gravity=NorthWest&xposition=0&yposition=266&rw=768&rh=430" alt="À propos"  width="800px" height="300px">
+       </div>
+
+       <div class="text"  data-aos="fade-right" data-aos-delay="1300">
+         <h2>Manhattan</h2>
+         <p>La ville de vos reves</p>
+       </div>
+     </div>
+    </div>
+ </section>
+ <!-- Voiture -->
+  <section class="Car">
+    <div class="text-Car">
+      <div class="contenu-text">
+        <h2 class="card" data-aos="fade-right" data-aos-delay="700"> Louez votre voiture pour un voyage sans souci !</h2>
+        <p class="card" data-aos="fade-left" data-aos-delay="800">Partez à l’aventure en toute liberté grâce à notre service de location de voiture ! Que ce soit pour explorer les environs, visiter des lieux incontournables ou simplement gagner en confort, nos véhicules sont prêts à vous accompagner
+           à chaque étape de votre séjour. Facile, rapide et flexible — réservez dès maintenant la voiture qui vous convient.</p>
+           <a href="https://www.kayak.fr/cars?lang=fr&utm_campaign=Generic+-+Group-G16083752101&utm_content=No+Location+-+site+location+voiture+-+T%3Dsite+-+P%3Dlocation+de+voiture+-+D%3DNone+-+S%3DNone&utm_medium=cpc&utm_source=bing&utm_term=site+de+location+de+voiture&skipapp=true" class="BOUTTON" class="card" data-aos="fade-down" data-aos-delay="900">👉 Plus de voiture</a>
+
+      </div>
+      
+    </div>
+     
+    <div class="Photo-Car" id="location">
+      <div class="Photo-Car-card" class="card" data-aos="fade-left" data-aos-delay="700">
+        <img src="https://www.pngmart.com/files/22/Renault-CLIO-PNG-HD.png" alt="">
+        <h4>Renault Clio</h4>
+        <a href="reservation-voiture.html" class="BOUTTON">Commandez</a>
+      </div>
+
+      <div class="Photo-Car-card" class="card" data-aos="fade-left" data-aos-delay="800">
+        <img src="https://autode-static.de/wp-content/uploads/2018/12/peugeot_124008suv_1b_lowaggressive-1024x680.png" alt="">
+        <h4>Peugept</h4>
+        <a href="reservation-voiture.html" class="BOUTTON">Commandez</a>
+      </div>
+
+      <div class="Photo-Car-card" class="card" data-aos="fade-left" data-aos-delay="900">
+        <img src="https://www.pngmart.com/files/22/Fiat-500-PNG-Isolated-HD.png" alt="">
+        <h4>Fiat 500</h4>
+        <a href="reservation-voiture.html" class="BOUTTON">Commandez</a>
+              </div>
+
+      <div class="Photo-Car-card" class="card" data-aos="fade-left" data-aos-delay="1000">
+        <img src="https://wallpapers.com/images/hd/volkswagen-polo-hatchback-png-06232024-v0ust8hq24wpsxy4.png" alt="">
+        <h4>Volkswagen Polo</h4>
+        <a href="reservation-voiture.html" class="BOUTTON">Commandez</a>
+      </div>
+
+      <div class="Photo-Car-card" class="card" data-aos="fade-left" data-aos-delay="1100">
+        <img src="https://www.seekpng.com/png/full/252-2526739_toyota-yaris-front-png.png" alt="">
+        <h4>Toyota Yaris</h4>
+        <a href="reservation-voiture.html" class="BOUTTON">Commandez</a>
+      </div>
+
+      <div class="Photo-Car-card" class="card" data-aos="fade-left" data-aos-delay="1200">
+        <img src="https://www.pngplay.com/wp-content/uploads/13/Ford-Kuga-PNG-Images-HD.png" alt="">
+        <h4>Fort Kuga</h4>
+        <a href="reservation-voiture.html" class="BOUTTON">Commandez</a>
+      </div>
+     
+    </div>
+
+    </div>
+  </section>
+
+
+     <!--footer -->
+   <footer>
+    <p>Voyage Évasion, 10 Rue des Explorateurs, 75012 Paris. Tél : 01.23.45.67.89</p>
+  
+    <div class="social-icons">
+      <a href="https://www.facebook.com/voyageevasion" target="_blank">🌐 Facebook</a>
+      <a href="https://www.instagram.com/voyageevasion" target="_blank">📸 Instagram</a>
+    </div>
+  
+    <ul class="footer-links">
+      <li><a href="/mentions-legales.html">Mentions légales</a></li>
+      <li><a href="/politique-cookies.html">Politique de cookies</a></li>
+      <li><a href="/confidentialite.html">Politique de confidentialité</a></li>
+      <li><a href="/conditions-utilisation.html">Conditions d'utilisation</a></li>
+    </ul>
+
+    <p>© 2021-2025 par Globe Web Agency, agence web spécialisée voyage, SEO - SEA - SMO à Paris</p>
+ </footer>
+
+ 
+      <!-- AOS JS -->
+      <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+      <script>
+        AOS.init({
+        duration: 1000, // durée des animations en ms
+        once: true      // animation une seule fois
+        });
+    </script>
+  
+</body>
+</html>
