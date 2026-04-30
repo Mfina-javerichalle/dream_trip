@@ -1,541 +1,1771 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <title>Dream Trip</title>
-    <!-- AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DreamTrip — Voyagez vers vos rêves</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --cream: #F7F3EE;
+      --dark: #0F0E0B;
+      --dark2: #1A1815;
+      --ink: #2C2A26;
+      --muted: #7A7468;
+      --white: #FFFFFF;
+      --card-radius: 2px;
+      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
 
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.4s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(15, 14, 11, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 14px 60px;
+      border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .nav-logo-icon {
+      width: 38px; height: 38px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      font-size: 1rem;
+    }
+
+    .nav-logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--dark) !important;
+      padding: 10px 24px;
+      border-radius: 1px;
+      font-weight: 600 !important;
+      letter-spacing: 1px !important;
+    }
+
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--dark) !important; }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .burger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: white;
+      transition: all 0.3s;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+      transform: scale(1.05);
+      animation: heroZoom 12s ease-out forwards;
+    }
+
+    @keyframes heroZoom {
+      to { transform: scale(1); }
+    }
+
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(10, 9, 7, 0.85) 0%,
+        rgba(10, 9, 7, 0.3) 50%,
+        rgba(10, 9, 7, 0.1) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 80px 100px;
+      max-width: 900px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      animation: fadeUp 1s 0.3s both;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 40px; height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 28px;
+      animation: fadeUp 1s 0.5s both;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+      animation: fadeUp 1s 0.7s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      animation: fadeUp 1s 0.9s both;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--dark);
+      padding: 16px 40px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 1px;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(201, 168, 76, 0.3);
+    }
+
+    .btn-outline {
+      color: var(--white);
+      padding: 16px 40px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 1px;
+      transition: all 0.3s;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px; right: 80px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: fadeUp 1s 1.2s both;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 1; transform: scaleY(1); }
+      50% { opacity: 0.4; transform: scaleY(0.7); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── SECTION COMMON ─── */
+    .section-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.15;
+    }
+
+    .section-title.light { color: var(--white); }
+
+    .section-divider {
+      width: 50px; height: 1px;
+      background: var(--gold);
+      margin: 20px auto 0;
+    }
+
+    /* ─── À PROPOS ─── */
+    #apropos {
+      padding: 120px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      background: var(--white);
+    }
+
+    .about-image-wrap {
+      position: relative;
+    }
+
+    .about-image-wrap img {
+      width: 100%;
+      height: 540px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-image-badge {
+      position: absolute;
+      bottom: -30px; right: -30px;
+      background: var(--gold);
+      color: var(--dark);
+      padding: 32px;
+      text-align: center;
+    }
+
+    .about-image-badge strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      display: block;
+      line-height: 1;
+    }
+
+    .about-image-badge span {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .about-text { padding-left: 20px; }
+
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .about-features {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .about-feature {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .about-feature i {
+      color: var(--gold);
+      font-size: 1rem;
+      width: 20px;
+    }
+
+    /* ─── SERVICES ─── */
+    #services {
+      padding: 120px 80px;
+      background: var(--cream);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 50px 36px;
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 3px;
+      background: var(--gold);
+      transition: width var(--transition);
+    }
+
+    .service-card:hover::before { width: 100%; }
+
+    .service-card:hover {
+      background: var(--dark);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    .service-icon {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .service-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--ink);
+      transition: color 0.3s;
+    }
+
+    .service-card:hover h3 { color: var(--white); }
+
+    .service-card p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--muted);
+      transition: color 0.3s;
+    }
+
+    .service-card:hover p { color: rgba(255,255,255,0.6); }
+
+    /* ─── DESTINATIONS ─── */
+    #destinations {
+      padding: 120px 80px;
+      background: var(--dark);
+    }
+
+    #destinations .section-title { color: var(--white); }
+
+    .destinations-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .dest-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 3/4;
+    }
+
+    .dest-card.featured {
+      grid-row: span 2;
+      aspect-ratio: auto;
+    }
+
+    .dest-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+      display: block;
+    }
+
+    .dest-card:hover img { transform: scale(1.08); }
+
+    .dest-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+      transition: opacity 0.3s;
+    }
+
+    .dest-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 28px;
+    }
+
+    .dest-country {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .dest-city {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .dest-card.featured .dest-city { font-size: 2.4rem; }
+
+    .dest-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 14px;
+      display: none;
+    }
+
+    .dest-card:hover .dest-desc { display: block; }
+
+    .dest-price {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--dark);
+      padding: 6px 16px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .dest-btn {
+      display: inline-block;
+      margin-top: 12px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.4);
+      color: white;
+      padding: 8px 20px;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'DM Sans', sans-serif;
+      text-decoration: none;
+    }
+
+    .dest-btn:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--dark);
+    }
+
+    /* ─── STATS ─── */
+    #stats {
+      padding: 100px 80px;
+      background: var(--gold);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 40px;
+      border-right: 1px solid rgba(0,0,0,0.15);
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 600;
+      color: var(--dark);
+      display: block;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--dark);
+      opacity: 0.7;
+    }
+
+    /* ─── HOTELS ─── */
+    #hotels {
+      padding: 120px 80px;
+      background: var(--cream);
+    }
+
+    .hotels-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      margin-top: 72px;
+    }
+
+    .hotel-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .hotel-card img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .hotel-card:hover img { transform: scale(1.05); }
+
+    .hotel-info {
+      padding: 28px 32px;
+    }
+
+    .hotel-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .hotel-info h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .hotel-info p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    /* ─── VOITURES ─── */
+    #cars {
+      padding: 120px 80px;
+      background: var(--dark2);
+    }
+
+    .cars-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .cars-intro-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .cars-intro-text p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 30px;
+    }
+
+    .cars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .car-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 36px 28px;
+      text-align: center;
+      transition: all var(--transition);
+      cursor: pointer;
+    }
+
+    .car-card:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: var(--gold);
+      transform: translateY(-6px);
+    }
+
+    .car-card img {
+      width: 100%;
+      max-height: 120px;
+      object-fit: contain;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
+      transition: transform 0.3s;
+    }
+
+    .car-card:hover img { transform: scale(1.05); }
+
+    .car-card h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .car-card .btn-car {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid rgba(201, 168, 76, 0.4);
+      color: var(--gold);
+      padding: 9px 24px;
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .car-card:hover .btn-car {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    /* ─── FAQ ─── */
+    #faq {
+      padding: 120px 80px;
+      background: var(--white);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    #faq .section-header { text-align: left; }
+    #faq .section-divider { margin: 20px 0 0; }
+
+    .faq-list {
+      margin-top: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 28px 0;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      transition: color 0.3s;
+    }
+
+    .faq-question:hover, .faq-question.active { color: var(--gold); }
+
+    .faq-icon {
+      width: 28px; height: 28px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+
+    .faq-question.active .faq-icon {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--dark);
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+    }
+
+    .faq-answer p {
+      padding: 0 0 28px;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    /* ─── TÉMOIGNAGES ─── */
+    #temoignages {
+      padding: 120px 80px;
+      background: var(--dark);
+      overflow: hidden;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 72px;
+    }
+
+    .testimonial-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 44px 40px;
+      position: relative;
+    }
+
+    .testimonial-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      color: var(--gold);
+      opacity: 0.3;
+      line-height: 1;
+      position: absolute;
+      top: 20px; left: 36px;
+    }
+
+    .testimonial-text {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 28px;
+      font-style: italic;
+      padding-top: 24px;
+    }
+
+    .testimonial-author strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+
+    .testimonial-author span {
+      font-size: 0.78rem;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+
+    .testimonial-stars {
+      color: var(--gold);
+      font-size: 0.75rem;
+      margin-bottom: 16px;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      padding: 120px 80px;
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 100px;
+      align-items: start;
+    }
+
+    .contact-info h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .contact-info p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.9rem;
+      color: var(--ink);
+    }
+
+    .contact-detail i {
+      color: var(--gold);
+      width: 20px;
+    }
+
+    .contact-form-wrap {
+      background: var(--white);
+      padding: 56px 48px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--cream);
+      border: 1px solid transparent;
+      padding: 14px 18px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.3s;
+      border-radius: 0;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      padding: 80px 80px 40px;
+      border-top: 1px solid rgba(201, 168, 76, 0.2);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+    .footer-brand .nav-logo { margin-bottom: 20px; }
+
+    .footer-brand p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.4);
+      max-width: 260px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .footer-social {
+      width: 38px; height: 38px;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+
+    .footer-social:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .footer-col h4 {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li { margin-bottom: 12px; }
+
+    .footer-col ul a {
+      text-decoration: none;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.45);
+      transition: color 0.3s;
+    }
+
+    .footer-col ul a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-bottom p {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ─── REVEAL ANIMATIONS ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ─── SECTION WRAPPER ─── */
+    .section-wrap {
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* ─── MOBILE MENU ─── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--dark);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      text-decoration: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--white);
+      transition: color 0.3s;
+    }
+
+    .mobile-menu a:hover { color: var(--gold); }
+
+    .mobile-close {
+      position: absolute;
+      top: 28px; right: 32px;
+      font-size: 2rem;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1100px) {
+      nav { padding: 20px 40px; }
+      nav.scrolled { padding: 14px 40px; }
+      .nav-links { gap: 24px; }
+      #apropos { padding: 80px 40px; gap: 50px; }
+      #services { padding: 80px 40px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      #destinations { padding: 80px 40px; }
+      .destinations-grid { grid-template-columns: repeat(2, 1fr); }
+      .dest-card.featured { grid-row: span 1; }
+      #stats { padding: 60px 40px; }
+      #hotels { padding: 80px 40px; }
+      #cars { padding: 80px 40px; }
+      .cars-intro { grid-template-columns: 1fr; gap: 40px; }
+      .cars-grid { grid-template-columns: repeat(2, 1fr); }
+      #faq { padding: 80px 40px; }
+      #temoignages { padding: 80px 40px; }
+      #contact { padding: 80px 40px; gap: 60px; }
+      footer { padding: 60px 40px 30px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      nav.scrolled { padding: 12px 24px; }
+      .nav-links, .nav-cta-wrap { display: none; }
+      .burger { display: flex; }
+
+      .hero-content { padding: 0 28px 80px; }
+      .hero-title { font-size: 3rem; }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+      .hero-scroll { display: none; }
+
+      #apropos { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+      .about-image-badge { right: 0; bottom: -20px; }
+      .about-text { padding-left: 0; }
+
+      #services { padding: 60px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+
+      #destinations { padding: 60px 24px; }
+      .destinations-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+
+      #stats { padding: 50px 24px; grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.15); }
+
+      #hotels { padding: 60px 24px; }
+      .hotels-grid { grid-template-columns: 1fr; }
+
+      #cars { padding: 60px 24px; }
+      .cars-grid { grid-template-columns: 1fr 1fr; }
+
+      #faq { padding: 60px 24px; }
+
+      #temoignages { padding: 60px 24px; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+
+      #contact { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+      .contact-form-wrap { padding: 36px 28px; }
+      .form-row { grid-template-columns: 1fr; }
+
+      footer { padding: 50px 24px 28px; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
 </head>
-
-
 <body>
- <!-- HEADER -->
-<header data-aos="zoom-in-right" data-aos-delay="200">
-  <div class="header-inner">
-    <div class="Logo">
-      <img src="https://cdn-icons-png.flaticon.com/512/201/201623.png" alt="Logo" />
-      <strong><span class="Logo-text">DreamTrip</span></strong>
-    </div>
 
-    <!-- Bouton Burger -->
-    <button
-      class="menu-toggle"
-      id="menu-toggle"
-      aria-label="Ouvrir le menu"
-      aria-expanded="false"
-      aria-controls="nav-menu"
-    >
-      ☰
-    </button>
+<!-- ─── MOBILE MENU ─── -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#hero" onclick="closeMobile()">Accueil</a>
+  <a href="#apropos" onclick="closeMobile()">À Propos</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#destinations" onclick="closeMobile()">Destinations</a>
+  <a href="#hotels" onclick="closeMobile()">Hôtels</a>
+  <a href="#cars" onclick="closeMobile()">Voitures</a>
+  <a href="#faq" onclick="closeMobile()">FAQ</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
 
-    <!-- Menu principal -->
-    <nav id="nav-menu">
-      <ul>
-        <li><a href="Indes.html">Accueil</a></li>
-        <li><a href="A-propos.html">A propos</a></li>
-        <li><a href="Nos-services.html">Services</a></li>
-        <li><a href="destinations.htm">Destinations</a></li>
-        <li><a href="Nos-chiffres.html">Chiffres</a></li>
-        <li><a href="locations.html">Hotel Vehicules</a></li>
-        <li><a href="FAQ.html">FAQ</a></li>
-        <li><a href="temoignages.html">Témoignages</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
+<!-- ─── NAVIGATION ─── -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <div class="nav-logo-icon"><i class="fas fa-globe-europe"></i></div>
+    <span class="nav-logo-text">DreamTrip</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#apropos">À Propos</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#hotels">Hôtels</a></li>
+    <li><a href="#cars">Voitures</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-cta-wrap">
+    <a href="#destinations" class="nav-links" style="list-style:none; display:flex;">
+      <li><a href="#destinations" class="nav-cta">Réserver</a></li>
+    </a>
   </div>
 
-  <!-- Bannière -->
-  <div id="Accueil" class="banner-content" data-aos="fade-up-right" data-aos-delay="200">
-    <div>
-      <h1>Voyagez vers vos rêves</h1>
-      <p>Explorez des destinations inoubliables, réservez vos vacances parfaites et vivez l'aventure avec DreamTrip.</p>
-      <a href="reservation.html" class="double-bordure">Réserver</a>
+  <button class="burger" id="burgerBtn" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Voyages d'exception</div>
+    <h1 class="hero-title">
+      Voyagez vers<br>
+      vos <em>rêves</em>
+    </h1>
+    <p class="hero-subtitle">
+      Explorez des destinations inoubliables, réservez vos vacances parfaites
+      et vivez l'aventure avec DreamTrip — votre partenaire de voyage de confiance.
+    </p>
+    <div class="hero-actions">
+      <a href="#destinations" class="btn-primary">Explorer nos destinations</a>
+      <a href="#apropos" class="btn-outline">Découvrir DreamTrip</a>
     </div>
   </div>
-</header>
 
-
-
-    <!--A propos1-->
-    <section id="A-propos" class="A-propos">
-        <div class="A-propos-text"  data-aos="fade-left" data-aos-delay="100">
-            <h2>A Propos de Dream Trip</h2>
-            <p>DreamTrip est votre partenaire de confiance pour découvrir le monde.
-               Que vous recherchiez des plages paradisiaques, des aventures inoubliables ou un moment
-               de détente, nous sommes là pour vous aider à créer vos plus beaux souvenirs de voyage.
-            </p>
-        </div>
-
-        <div class="A-propos-Image" data-aos="fade-right" data-aos-delay="200">
-        <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=800&q=80" alt="À propos">       
-        </div>
-    </section>
-
-    <!--A propos2-->
-    <section  class="about">
-        <div class="about-content">
-         <div class="image" data-aos="fade-left" data-aos-delay="100">
-                <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=900&q=80" alt="À propos">
-          </div>
-          <div class="text"  data-aos="fade-right" data-aos-delay="200">
-            <h2>Un Monde de Rêve</h2>
-            <p>
-              Chez DreamTrip, chaque continent raconte une histoire, chaque destination est une promesse d’évasion.
-              Que vous rêviez de découvrir les trésors cachés de notre planète, de marcher sur des terres inconnues 
-              de simplement contempler la beauté du monde, nous vous guidons vers une expérience inoubliable. 
-              Préparez-vous à voyager autrement, avec passion et authenticité.
-            </p>
-          </div>
-        </div>
-    </section>
-
-
-    <!--nos services -->
-    <h2 id="titre1"data-aos="fade-up" data-aos-delay="100" >Nos Services</h2>
-    <section id="Nos-services" class="caracteristiques">
-        <div class="caracteristiques-container">
-          <div class="caracteristiques-card">
-                <i class="fas fa-plane-departure"></i>
-                <h3>Itinéraires personnalisés</h3>
-                <p>Conçus sur mesure selon vos envies d'aventure.</p>
-         </div>
-         <div class="caracteristiques-card">
-                <i class="fas fa-hotel"></i>
-                <h3>Support 24/7</h3>
-                <p>Assistance disponible à tout moment, partout dans le monde.</p>
-         </div>
-
-         <div class="caracteristiques-card">
-                <i class="fas fa-route"></i>
-                <h3>Itinéraires personnalisés</h3>
-                <p>Conçus sur mesure selon vos envies d'aventure.</p>
-         </div>
-         <div class="caracteristiques-card">
-                <i class="fas fa-headset"></i>
-                <h3>Support 24/7</h3>
-                <p>Assistance disponible à tout moment, partout dans le monde.</p>
-         </div>
-
-        </div>
-    </section>
-
-
-    <!--destinations-->
-    <section class="destinations" id="destinations">
-  <div class="destinations-header" data-aos="fade-up">
-    <h2>Nos Destinations <i class="fas fa-plane-departure"></i></h2>
-    <p>Découvrez nos destinations</p>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    Scroll
   </div>
-  
-  <div class="slider" data-aos="zoom-in">
-    <div class="slide">
-      <img src="https://s1.1zoom.me/b5050/488/France_Paris_Eiffel_443254_1920x1200.jpg" alt="Paris" />
-      <img src="https://www.travellingking.com/wp-content/uploads/2017/11/tobias-winkelmann-367873.jpg" alt="Bali" />
-      <img src="https://wallup.net/wp-content/uploads/2017/11/23/449455-cityscape-Japan-Tokyo-Tokyo_Tower.jpg" alt="Tokyo" />
+</section>
+
+<!-- ─── À PROPOS ─── -->
+<section id="apropos">
+  <div class="about-image-wrap reveal-left">
+    <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=800&q=80" alt="À propos DreamTrip">
+    <div class="about-image-badge">
+      <strong>10+</strong>
+      <span>Ans d'expertise</span>
     </div>
   </div>
-  
-  <div class="destination-cards">
-    <div class="card" data-aos="fade-up" data-aos-delay="100">
-      <img src="https://s1.1zoom.me/b5050/488/France_Paris_Eiffel_443254_1920x1200.jpg" alt="Paris">
-      <h3>Paris, France</h3>
-      <p>Capitale romantique et culturelle, idéale à toutes les saisons.</p>
-      <span class="price">À partir de 850€</span>
-      <!-- ✅ DESTINATION Paris -->
-      <button onclick="selectDestination('Paris')">Réserver</button>
+
+  <div class="about-text reveal-right">
+    <div class="section-header" style="text-align:left;">
+      <span class="section-tag">À propos de nous</span>
+      <h2 class="section-title">Votre partenaire<br>de confiance</h2>
+      <div class="section-divider" style="margin-left:0;"></div>
     </div>
 
-    <div class="card" data-aos="fade-up" data-aos-delay="200">
-      <img src="https://www.travellingking.com/wp-content/uploads/2017/11/tobias-winkelmann-367873.jpg" alt="Bali">
-      <h3>Bali</h3>
-      <p>Plages de rêve et temples mystiques pour un voyage inoubliable.</p>
-      <span class="price">À partir de 750€</span>
-      <!-- ✅ DESTINATION Bali -->
-      <button onclick="selectDestination('Bali')">Réserver</button>
-    </div>
+    <p>DreamTrip est votre partenaire de confiance pour découvrir le monde. Que vous recherchiez des plages paradisiaques, des aventures inoubliables ou un moment de détente, nous sommes là pour créer vos plus beaux souvenirs de voyage.</p>
 
-    <div class="card" data-aos="fade-up" data-aos-delay="300">
-      <img src="https://www.centralparktours.com/blog/content/images/2020/07/Empire2--Midnight.JPG" alt="New York">
-      <h3>New York</h3>
-      <p>La ville qui ne dort jamais vous réserve des surprises.</p>
-      <span class="price">À partir de 950€</span>
-      <!-- ✅ DESTINATION New York -->
-      <button onclick="selectDestination('New York')">Réserver</button>
-    </div>
+    <p>Chez DreamTrip, chaque continent raconte une histoire, chaque destination est une promesse d'évasion. Préparez-vous à voyager autrement, avec passion et authenticité.</p>
 
-    <div class="card" data-aos="fade-up" data-aos-delay="400">
-      <img src="https://wallup.net/wp-content/uploads/2017/11/23/449455-cityscape-Japan-Tokyo-Tokyo_Tower.jpg" alt="Tokyo">
-      <h3>Tokyo</h3>
-      <p>Fusion parfaite entre modernité et traditions japonaises.</p>
-      <span class="price">À partir de 1000€</span>
-      <!-- ✅ DESTINATION Tokyo -->
-      <button onclick="selectDestination('Tokyo')">Réserver</button>
-    </div>
-
-    <div class="card" data-aos="fade-up" data-aos-delay="100">
-      <img src="https://leminaregypt.com/wp-content/uploads/2021/01/slider3.jpg" alt="Le Caire">
-      <h3>Le Caire</h3>
-      <p>Partez à la rencontre des pharaons et des pyramides.</p>
-      <span class="price">À partir de 650€</span>
-      <!-- ✅ DESTINATION Le Caire -->
-      <button onclick="selectDestination('Le Caire')">Réserver</button>
-    </div>
-
-    <div class="card" data-aos="fade-up" data-aos-delay="200">
-      <img src="https://images7.alphacoders.com/716/thumb-1920-716104.jpg" alt="Sydney">
-      <h3>Sydney</h3>
-      <p>Découvrez l'opéra et les plages emblématiques australiennes.</p>
-      <span class="price">À partir de 1200€</span>
-      <!-- ✅ DESTINATION Sydney -->
-      <button onclick="selectDestination('Sydney')">Réserver</button>
-    </div>
-
-    <div class="card" data-aos="fade-up" data-aos-delay="300">
-      <img src="https://lespetitsvoyagesdelilly.com/wp-content/uploads/2021/08/b66a8f7d-0d57-4b5b-be8b-4e2b63482cdd.jpg?w=1200" alt="Santorin">
-      <h3>Santorin</h3>
-      <p>Maisons blanches, couchers de soleil et mer Égée.</p>
-      <span class="price">À partir de 850€</span>
-      <!-- ✅ DESTINATION Santorin -->
-      <button onclick="selectDestination('Santorin')">Réserver</button>
-    </div>
-
-    <div class="card" data-aos="fade-up" data-aos-delay="400">
-      <img src="https://www.sixt.fr/magazine/wp-content/uploads/sites/3/2018/08/helicopter-1218974_1920.jpg" alt="Le Cap">
-      <h3>Le Cap</h3>
-      <p>Montagnes, plages, nature et culture sud-africaine.</p>
-      <span class="price">À partir de 550€</span>
-      <!-- ✅ DESTINATION Le Cap -->
-      <button onclick="selectDestination('Le Cap')">Réserver</button>
+    <div class="about-features">
+      <div class="about-feature"><i class="fas fa-check"></i> Voyages personnalisés selon vos envies</div>
+      <div class="about-feature"><i class="fas fa-check"></i> Hébergements soigneusement sélectionnés</div>
+      <div class="about-feature"><i class="fas fa-check"></i> Assistance 24h/24, 7j/7</div>
+      <div class="about-feature"><i class="fas fa-check"></i> Plus de 50 destinations dans le monde</div>
     </div>
   </div>
 </section>
 
-   
-  
-    <section class="Nos-chiffres" id="Nos-chiffres">
-    <h2 id="titre" data-aos="fade-down" data-aos-delay="100" >Nos Chriffres clés</h2>
-      <div class="figures" data-aos="fade-up" data-aos-delay="100">
-        <div class="figure-item">
-          <strong >150+</strong>
-          <span>Hectares cultivés</span>
-        </div>
-        <div class="figure-item">
-          <strong >500+</strong>
-          <span>Clients satisfaits</span>
-        </div>
-        <div class="figure-item">
-          <strong >3000+</strong>
-          <span>Produits agricoles vendus</span>
-        </div>
-        <div class="figure-item">
-          <strong>20%</strong>
-          <span>Croissance des rendements</span>
-        </div>
+<!-- ─── SERVICES ─── -->
+<section id="services">
+  <div class="section-header reveal">
+    <span class="section-tag">Ce que nous offrons</span>
+    <h2 class="section-title">Nos Services</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-icon"><i class="fas fa-plane-departure"></i></span>
+      <h3>Itinéraires personnalisés</h3>
+      <p>Conçus sur mesure selon vos envies d'aventure, pour une expérience unique à chaque voyage.</p>
     </div>
-    </section>
-
-   <!-- Hôtels -->
-   <section class="Hôtels" >
-      <h2 id="titre1" data-aos="fade-up" data-aos-delay="100"> Location Hôtels & voitures  </h2>
-      <p id="titre2" data-aos="fade-up" data-aos-delay="200">Découvrez nos plus beaux hôtels </p>
-
-      <div class="Hôtels-propos">
-        <div class="Hôtels-text"  data-aos="fade-left" data-aos-delay="100">
-          <h2>Congo Brazzaville</h2>
-          <p>Passez vos plus belles nuit dans nos meilleures hôtels</p>
-        </div>
-        <div class="Hôtels-Image" data-aos="fade-right" data-aos-delay="200">
-          <img src="https://media.iceportal.com/113928/photos/62716664_XL.jpg" alt="À propos" width="800px" height="300px">       
-        </div>
-     </div>
-
-      <div class="Hôtels-propos">
-       <div class="Hôtels-text"  data-aos="fade-left" data-aos-delay="100">
-         <h2>Marseilles</h2>
-         <p>Venez passer des avantures inoubliables</p>
-       </div>
-
-       <div class="Hôtels-Image" data-aos="fade-right" data-aos-delay="200">
-         <img src="https://www.liligo.fr/magazine-voyage/wp-content/uploads/sites/42/2016/03/Marseille-header-iStock.jpg" alt="À propos"  width="800px" height="300px">       
-       </div>
-     </div>
-
-      <div class="Hôtel">
-        <div class="Hôtel-content">
-         <div class="image" data-aos="fade-left" data-aos-delay="300">
-           <img src="https://cloud.famproperties.com/fam/blog/493-161442.jpg493-161442.jpg493-161443.jpg493-161443.jpg" alt="À propos" width="800px" height="300px">
-         </div>
-
-         <div class="text"  data-aos="fade-right" data-aos-delay="400">
-           <h2>Chypre</h2>
-           <p> Allos réaliser vos reves les plus foux</p>
-         </div>
-       </div>
-      </div>
-
-     <div class="Hôtel">
-       <div class="Hôtel-content">
-         <div class="image" data-aos="fade-left" data-aos-delay="500">
-           <img src="https://www.hilton.com/im/en/NYCFDHF/15920061/nycfdhf-sandbar-4-1.jpg?impolicy=crop&cw=5000&ch=2799&gravity=NorthWest&xposition=0&yposition=266&rw=768&rh=430" alt="À propos"  width="800px" height="300px">
-         </div>
-
-         <div class="text"  data-aos="fade-right" data-aos-delay="600">
-           <h2>Manhattan</h2>
-           <p>La ville de vos reves</p>
-         </div>
-       </div>
-      </div>
-   </section>
-   <!-- Voiture -->
-   <section class="Car">
-  <div class="text-Car">
-    <div class="contenu-text">
-      <h2 class="card" data-aos="fade-right" data-aos-delay="700">Louez votre voiture pour un voyage sans souci !</h2>
-      <p class="card" data-aos="fade-left" data-aos-delay="800">Partez à l'aventure en toute liberté grâce à notre service de location de voiture ! Que ce soit pour explorer les environs, visiter des lieux incontournables ou simplement gagner en confort, nos véhicules sont prêts à vous accompagner à chaque étape de votre séjour. Facile, rapide et flexible — réservez dès maintenant la voiture qui vous convient.</p>
-      <a href="reservation-voiture.html" class="BOUTTON card" data-aos="fade-down" data-aos-delay="900">👉 Plus de voitures</a>
+    <div class="service-card reveal" style="transition-delay:0.1s">
+      <span class="service-icon"><i class="fas fa-hotel"></i></span>
+      <h3>Hébergements sélectionnés</h3>
+      <p>Des logements confortables adaptés à votre budget, des auberges de charme aux hôtels de luxe.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.2s">
+      <span class="service-icon"><i class="fas fa-route"></i></span>
+      <h3>Circuits optimisés</h3>
+      <p>Des parcours étudiés pour profiter sans stress, avec des guides locaux expérimentés.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.3s">
+      <span class="service-icon"><i class="fas fa-headset"></i></span>
+      <h3>Support 24/7</h3>
+      <p>Assistance disponible à tout moment, partout dans le monde pour une tranquillité totale.</p>
     </div>
   </div>
-  
-  <div class="Photo-Car" id="location">
-    <div class="Photo-Car-card card" data-aos="fade-left" data-aos-delay="700">
+</section>
+
+<!-- ─── DESTINATIONS ─── -->
+<section id="destinations">
+  <div class="section-header reveal">
+    <span class="section-tag">Explorez le monde</span>
+    <h2 class="section-title light">Nos Destinations</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="destinations-grid">
+    <!-- Featured -->
+    <div class="dest-card featured reveal">
+      <img src="https://s1.1zoom.me/b5050/488/France_Paris_Eiffel_443254_1920x1200.jpg" alt="Paris">
+      <div class="dest-overlay"></div>
+      <div class="dest-content">
+        <div class="dest-country">France</div>
+        <div class="dest-city">Paris</div>
+        <div class="dest-desc">Capitale romantique et culturelle, idéale à toutes les saisons.</div>
+        <span class="dest-price">À partir de 850€</span><br>
+        <a href="reservation.html" class="dest-btn" onclick="localStorage.setItem('selectedDestination','Paris')">Réserver</a>
+      </div>
+    </div>
+
+    <div class="dest-card reveal" style="transition-delay:0.1s">
+      <img src="https://www.travellingking.com/wp-content/uploads/2017/11/tobias-winkelmann-367873.jpg" alt="Bali">
+      <div class="dest-overlay"></div>
+      <div class="dest-content">
+        <div class="dest-country">Indonésie</div>
+        <div class="dest-city">Bali</div>
+        <div class="dest-desc">Plages de rêve et temples mystiques.</div>
+        <span class="dest-price">À partir de 750€</span><br>
+        <a href="reservation.html" class="dest-btn" onclick="localStorage.setItem('selectedDestination','Bali')">Réserver</a>
+      </div>
+    </div>
+
+    <div class="dest-card reveal" style="transition-delay:0.2s">
+      <img src="https://www.centralparktours.com/blog/content/images/2020/07/Empire2--Midnight.JPG" alt="New York">
+      <div class="dest-overlay"></div>
+      <div class="dest-content">
+        <div class="dest-country">États-Unis</div>
+        <div class="dest-city">New York</div>
+        <div class="dest-desc">La ville qui ne dort jamais.</div>
+        <span class="dest-price">À partir de 950€</span><br>
+        <a href="reservation.html" class="dest-btn" onclick="localStorage.setItem('selectedDestination','New York')">Réserver</a>
+      </div>
+    </div>
+
+    <div class="dest-card reveal" style="transition-delay:0.1s">
+      <img src="https://wallup.net/wp-content/uploads/2017/11/23/449455-cityscape-Japan-Tokyo-Tokyo_Tower.jpg" alt="Tokyo">
+      <div class="dest-overlay"></div>
+      <div class="dest-content">
+        <div class="dest-country">Japon</div>
+        <div class="dest-city">Tokyo</div>
+        <div class="dest-desc">Modernité et traditions japonaises.</div>
+        <span class="dest-price">À partir de 1 000€</span><br>
+        <a href="reservation.html" class="dest-btn" onclick="localStorage.setItem('selectedDestination','Tokyo')">Réserver</a>
+      </div>
+    </div>
+
+    <div class="dest-card reveal" style="transition-delay:0.2s">
+      <img src="https://leminaregypt.com/wp-content/uploads/2021/01/slider3.jpg" alt="Le Caire">
+      <div class="dest-overlay"></div>
+      <div class="dest-content">
+        <div class="dest-country">Égypte</div>
+        <div class="dest-city">Le Caire</div>
+        <div class="dest-desc">Les pharaons et les pyramides vous attendent.</div>
+        <span class="dest-price">À partir de 650€</span><br>
+        <a href="reservation.html" class="dest-btn" onclick="localStorage.setItem('selectedDestination','Le Caire')">Réserver</a>
+      </div>
+    </div>
+
+    <div class="dest-card reveal" style="transition-delay:0.3s">
+      <img src="https://images7.alphacoders.com/716/thumb-1920-716104.jpg" alt="Sydney">
+      <div class="dest-overlay"></div>
+      <div class="dest-content">
+        <div class="dest-country">Australie</div>
+        <div class="dest-city">Sydney</div>
+        <div class="dest-desc">L'opéra et les plages emblématiques.</div>
+        <span class="dest-price">À partir de 1 200€</span><br>
+        <a href="reservation.html" class="dest-btn" onclick="localStorage.setItem('selectedDestination','Sydney')">Réserver</a>
+      </div>
+    </div>
+
+    <div class="dest-card reveal" style="transition-delay:0.1s">
+      <img src="https://lespetitsvoyagesdelilly.com/wp-content/uploads/2021/08/b66a8f7d-0d57-4b5b-be8b-4e2b63482cdd.jpg?w=1200" alt="Santorin">
+      <div class="dest-overlay"></div>
+      <div class="dest-content">
+        <div class="dest-country">Grèce</div>
+        <div class="dest-city">Santorin</div>
+        <div class="dest-desc">Maisons blanches et mer Égée.</div>
+        <span class="dest-price">À partir de 850€</span><br>
+        <a href="reservation.html" class="dest-btn" onclick="localStorage.setItem('selectedDestination','Santorin')">Réserver</a>
+      </div>
+    </div>
+
+    <div class="dest-card reveal" style="transition-delay:0.2s">
+      <img src="https://www.sixt.fr/magazine/wp-content/uploads/sites/3/2018/08/helicopter-1218974_1920.jpg" alt="Le Cap">
+      <div class="dest-overlay"></div>
+      <div class="dest-content">
+        <div class="dest-country">Afrique du Sud</div>
+        <div class="dest-city">Le Cap</div>
+        <div class="dest-desc">Montagnes, plages et culture sud-africaine.</div>
+        <span class="dest-price">À partir de 550€</span><br>
+        <a href="reservation.html" class="dest-btn" onclick="localStorage.setItem('selectedDestination','Le Cap')">Réserver</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STATS ─── -->
+<section id="stats">
+  <div class="stat-item reveal">
+    <span class="stat-number">50+</span>
+    <span class="stat-label">Destinations mondiales</span>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:0.1s">
+    <span class="stat-number">500+</span>
+    <span class="stat-label">Clients satisfaits</span>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:0.2s">
+    <span class="stat-number">10+</span>
+    <span class="stat-label">Années d'expertise</span>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:0.3s">
+    <span class="stat-number">24/7</span>
+    <span class="stat-label">Support disponible</span>
+  </div>
+</section>
+
+<!-- ─── HÔTELS ─── -->
+<section id="hotels">
+  <div class="section-header reveal">
+    <span class="section-tag">Hébergements de prestige</span>
+    <h2 class="section-title">Nos Hôtels</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="hotels-grid">
+    <div class="hotel-card reveal">
+      <img src="https://media.iceportal.com/113928/photos/62716664_XL.jpg" alt="Congo Brazzaville">
+      <div class="hotel-info">
+        <div class="hotel-tag">Congo · Afrique</div>
+        <h3>Congo Brazzaville</h3>
+        <p>Passez vos plus belles nuits dans nos meilleurs hôtels au cœur de l'Afrique équatoriale.</p>
+      </div>
+    </div>
+
+    <div class="hotel-card reveal" style="transition-delay:0.15s">
+      <img src="https://www.liligo.fr/magazine-voyage/wp-content/uploads/sites/42/2016/03/Marseille-header-iStock.jpg" alt="Marseille">
+      <div class="hotel-info">
+        <div class="hotel-tag">France · Europe</div>
+        <h3>Marseille</h3>
+        <p>Vivez des aventures inoubliables au bord de la Méditerranée dans nos hôtels de charme.</p>
+      </div>
+    </div>
+
+    <div class="hotel-card reveal" style="transition-delay:0.1s">
+      <img src="https://cloud.famproperties.com/fam/blog/493-161442.jpg" alt="Chypre">
+      <div class="hotel-info">
+        <div class="hotel-tag">Chypre · Méditerranée</div>
+        <h3>Chypre</h3>
+        <p>Réalisez vos rêves les plus fous sous le soleil méditerranéen dans un cadre exceptionnel.</p>
+      </div>
+    </div>
+
+    <div class="hotel-card reveal" style="transition-delay:0.25s">
+      <img src="https://www.hilton.com/im/en/NYCFDHF/15920061/nycfdhf-sandbar-4-1.jpg?impolicy=crop&rw=768&rh=430" alt="Manhattan">
+      <div class="hotel-info">
+        <div class="hotel-tag">États-Unis · Amériques</div>
+        <h3>Manhattan</h3>
+        <p>La ville de vos rêves vous attend entre luxe et modernité au cœur de New York.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── VOITURES ─── -->
+<section id="cars">
+  <div class="cars-intro">
+    <div class="cars-intro-text reveal-left">
+      <span class="section-tag">Liberté totale</span>
+      <h2>Louez votre voiture pour un voyage sans souci</h2>
+      <p>Partez à l'aventure en toute liberté grâce à notre service de location. Que ce soit pour explorer les environs ou visiter des lieux incontournables, nos véhicules sont prêts à vous accompagner à chaque étape de votre séjour.</p>
+      <a href="reservation-voiture.html" class="btn-primary">Voir tous les véhicules</a>
+    </div>
+
+    <div class="reveal-right">
+      <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=900&q=80" alt="Location voiture" style="width:100%; height:380px; object-fit:cover; display:block;">
+    </div>
+  </div>
+
+  <div class="cars-grid">
+    <div class="car-card reveal">
       <img src="https://www.pngmart.com/files/22/Renault-CLIO-PNG-HD.png" alt="Renault Clio">
       <h4>Renault Clio</h4>
-      <!-- ✅ LIEN + selectCar() -->
-      <a href="reservation-voiture.html" onclick="selectCar('Renault Clio'); return false;">
-        <button class="btn-reserver">Réserver</button>
-      </a>
+      <a href="reservation-voiture.html" class="btn-car" onclick="localStorage.setItem('selectedCar','Renault Clio')">Réserver</a>
     </div>
-
-    <div class="Photo-Car-card card" data-aos="fade-left" data-aos-delay="800">
+    <div class="car-card reveal" style="transition-delay:0.1s">
       <img src="https://autode-static.de/wp-content/uploads/2018/12/peugeot_124008suv_1b_lowaggressive-1024x680.png" alt="Peugeot 3008">
       <h4>Peugeot 3008</h4>
-      <!-- ✅ LIEN + selectCar() -->
-      <a href="reservation-voiture.html" onclick="selectCar('Peugeot 3008'); return false;">
-        <button class="btn-reserver">Réserver</button>
-      </a>
+      <a href="reservation-voiture.html" class="btn-car" onclick="localStorage.setItem('selectedCar','Peugeot 3008')">Réserver</a>
     </div>
-
-    <div class="Photo-Car-card card" data-aos="fade-left" data-aos-delay="900">
+    <div class="car-card reveal" style="transition-delay:0.2s">
       <img src="https://www.pngmart.com/files/22/Fiat-500-PNG-Isolated-HD.png" alt="Fiat 500">
       <h4>Fiat 500</h4>
-      <!-- ✅ LIEN + selectCar() -->
-      <a href="reservation-voiture.html" onclick="selectCar('Fiat 500'); return false;">
-        <button class="btn-reserver">Réserver</button>
-      </a>
+      <a href="reservation-voiture.html" class="btn-car" onclick="localStorage.setItem('selectedCar','Fiat 500')">Réserver</a>
     </div>
-
-    <div class="Photo-Car-card card" data-aos="fade-left" data-aos-delay="1000">
+    <div class="car-card reveal" style="transition-delay:0.1s">
       <img src="https://wallpapers.com/images/hd/volkswagen-polo-hatchback-png-06232024-v0ust8hq24wpsxy4.png" alt="Volkswagen Polo">
       <h4>Volkswagen Polo</h4>
-      <!-- ✅ LIEN + selectCar() -->
-      <a href="reservation-voiture.html" onclick="selectCar('Volkswagen Polo'); return false;">
-        <button class="btn-reserver">Réserver</button>
-      </a>
+      <a href="reservation-voiture.html" class="btn-car" onclick="localStorage.setItem('selectedCar','Volkswagen Polo')">Réserver</a>
     </div>
-
-    <div class="Photo-Car-card card" data-aos="fade-left" data-aos-delay="1100">
+    <div class="car-card reveal" style="transition-delay:0.2s">
       <img src="https://www.seekpng.com/png/full/252-2526739_toyota-yaris-front-png.png" alt="Toyota Yaris">
       <h4>Toyota Yaris</h4>
-      <!-- ✅ LIEN + selectCar() -->
-      <a href="reservation-voiture.html" onclick="selectCar('Toyota Yaris'); return false;">
-        <button class="btn-reserver">Réserver</button>
-      </a>
+      <a href="reservation-voiture.html" class="btn-car" onclick="localStorage.setItem('selectedCar','Toyota Yaris')">Réserver</a>
     </div>
-
-    <div class="Photo-Car-card card" data-aos="fade-left" data-aos-delay="1200">
+    <div class="car-card reveal" style="transition-delay:0.3s">
       <img src="https://www.pngplay.com/wp-content/uploads/13/Ford-Kuga-PNG-Images-HD.png" alt="Ford Kuga">
       <h4>Ford Kuga</h4>
-      <!-- ✅ LIEN + selectCar() -->
-      <a href="reservation-voiture.html" onclick="selectCar('Ford Kuga'); return false;">
-        <button class="btn-reserver">Réserver</button>
-      </a>
+      <a href="reservation-voiture.html" class="btn-car" onclick="localStorage.setItem('selectedCar','Ford Kuga')">Réserver</a>
     </div>
   </div>
 </section>
 
+<!-- ─── FAQ ─── -->
+<div id="faq">
+  <div class="section-header">
+    <span class="section-tag">Questions fréquentes</span>
+    <h2 class="section-title">FAQ</h2>
+    <div class="section-divider" style="margin-left:0;"></div>
+  </div>
 
-   <h2 id="titre"  data-aos="fade-down" data-aos-delay="100" >Foire Aux Questions</h2>
-
-   <!-- FAQ -->
-   <section  class="FAQ">
+  <div class="faq-list">
     <div class="faq-item">
-    <button class="faq-question">Quels types de voyages proposez-vous ?</button>
-    <div class="faq-answer">
-      <p>Nous proposons des séjours en solo, en famille, des circuits organisés, et des voyages sur mesure dans plus de 50 pays.</p>
+      <button class="faq-question">Quels types de voyages proposez-vous ? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>Nous proposons des séjours en solo, en famille, des circuits organisés, et des voyages sur mesure dans plus de 50 pays à travers le monde.</p></div>
     </div>
-    </div>
-
     <div class="faq-item">
-    <button class="faq-question">Puis-je annuler ou modifier ma réservation ?</button>
-    <div class="faq-answer">
-      <p>Oui, selon les conditions de l’offre. Nous offrons une assistance pour toute modification ou annulation avec remboursement partiel ou total selon les cas.</p>
+      <button class="faq-question">Puis-je annuler ou modifier ma réservation ? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>Oui, selon les conditions de l'offre. Nous offrons une assistance pour toute modification ou annulation avec remboursement partiel ou total selon les cas.</p></div>
     </div>
-    </div>
-
     <div class="faq-item">
-    <button class="faq-question">Comment puis-je contacter le support client ?</button>
-    <div class="faq-answer">
-      <p>Vous pouvez nous contacter 24/7 par chat en ligne, téléphone ou email. Une équipe est toujours prête à vous aider.</p>
+      <button class="faq-question">Comment puis-je contacter le support client ? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>Vous pouvez nous contacter 24/7 par chat en ligne, téléphone ou email. Une équipe est toujours prête à vous aider où que vous soyez dans le monde.</p></div>
     </div>
-    </div>
-
     <div class="faq-item">
-    <button class="faq-question">Quels types de voyages proposez-vous ?</button>
-    <div class="faq-answer">
-      <p>Nous proposons des séjours en solo, en famille, des circuits organisés, et des voyages sur mesure dans plus de 50 pays.</p>
+      <button class="faq-question">Les prix affichés incluent-ils les taxes ? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>Tous nos prix sont affichés TTC. Il n'y a pas de frais cachés — ce que vous voyez est ce que vous payez. Certaines taxes locales peuvent s'appliquer selon la destination.</p></div>
     </div>
-    </div>
-
     <div class="faq-item">
-    <button class="faq-question">Puis-je annuler ou modifier ma réservation ?</button>
-    <div class="faq-answer">
-      <p>Oui, selon les conditions de l’offre. Nous offrons une assistance pour toute modification ou annulation avec remboursement partiel ou total selon les cas.</p>
+      <button class="faq-question">Proposez-vous des assurances voyage ? <span class="faq-icon">+</span></button>
+      <div class="faq-answer"><p>Oui, nous proposons différentes formules d'assurance voyage adaptées à vos besoins, incluant couverture médicale, annulation et bagages.</p></div>
     </div>
-    </div>
+  </div>
+</div>
 
-    <div class="faq-item">
-    <button class="faq-question">Comment puis-je contacter le support client ?</button>
-    <div class="faq-answer">
-      <p>Vous pouvez nous contacter 24/7 par chat en ligne, téléphone ou email. Une équipe est toujours prête à vous aider.</p>
-    </div>
-    </div>
-   </section>
+<!-- ─── TÉMOIGNAGES ─── -->
+<section id="temoignages">
+  <div class="section-header reveal">
+    <span class="section-tag">Ce que disent nos clients</span>
+    <h2 class="section-title light">Témoignages</h2>
+    <div class="section-divider"></div>
+  </div>
 
-   <!--Temoignages -->
-   <section class="Temoignages" >
-  <h2 id="titre" data-aos="fade-down" data-aos-delay="100" >Témoignages</h2>
-  <div class="Temoignages-cards">
-
-    <div class="Cards" data-aos="fade-up" data-aos-delay="300" >
-    <div class="T-items">“</div>
-    <p>Organisation parfaite du début à la fin. Le voyage correspondait exactement à mes envies. Une expérience inoubliable, tout était bien pensé..</p>
-    <h4>Sophie, <span> Villemomble</span></h4>
-    </div>
-
-    <div class="Cards" data-aos="fade-up" data-aos-delay="400">
-      <div class="T-items">“</div>
-      <p>Un accompagnement personnalisé pour mon voyage de noces. Grâce à Camille, nous avons vécu un séjour magique, sans stress ni mauvaise surprise..</p>
-      <h4>Emma, <span>  Le Raincy </span></h4>
-    </div>
-
-    <div class="Cards" data-aos="fade-up" data-aos-delay="500">
-      <div class="T-items"> “ </div>
-      <p>Très à l’écoute de mes attentes. L’itinéraire proposé était original et parfaitement adapté à mon budget. Un service professionnel et chaleureux.</p>
-      <h4>Estelle, <span>Chelles</span></h4>
-    </div>
-    </div>
-   </section>
-
-   <!--Contact -->
-   <section  class="contact-section" >
-    <h2 data-aos="fade-" data-aos-delay="100">Posez-nous une question</h2>
-    <form class="contact-form">
-      <label for="name">Nom :</label>
-      <input type="text" name="name" placeholder="Votre Nom" required>
-      <label for="name">Prenom :</label>
-      <input type="text" name="name" placeholder="Votre Prenom" required>
-      <label for="name">Email:</label>
-      <input type="email" name="email" placeholder="Votre Email" required>
-      <label for="name">Message :</label>
-      <textarea name="message" rows="5" placeholder="Votre Message..." required></textarea>
-      <button type="submit">Envoyer</button>
-    </form>
-   </section>
-
-   <!--footer -->
-   <footer>
-      <p>Voyage Évasion, 10 Rue des Explorateurs, 75012 Paris. Tél : 01.23.45.67.89</p>
-    
-      <div class="social-icons">
-        <a href="https://www.facebook.com/voyageevasion" target="_blank">🌐 Facebook</a>
-        <a href="https://www.instagram.com/voyageevasion" target="_blank">📸 Instagram</a>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">Organisation parfaite du début à la fin. Le voyage correspondait exactement à mes envies. Une expérience inoubliable, tout était bien pensé.</p>
+      <div class="testimonial-author">
+        <strong>Sophie</strong>
+        <span>Villemomble</span>
       </div>
-    
-      <ul class="footer-links">
-        <li><a href="/mentions-legales.html">Mentions légales</a></li>
-        <li><a href="/politique-cookies.html">Politique de cookies</a></li>
-        <li><a href="/confidentialite.html">Politique de confidentialité</a></li>
-        <li><a href="/conditions-utilisation.html">Conditions d'utilisation</a></li>
+    </div>
+
+    <div class="testimonial-card reveal" style="transition-delay:0.15s">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">Un accompagnement personnalisé pour mon voyage de noces. Nous avons vécu un séjour magique, sans stress ni mauvaise surprise.</p>
+      <div class="testimonial-author">
+        <strong>Emma</strong>
+        <span>Le Raincy</span>
+      </div>
+    </div>
+
+    <div class="testimonial-card reveal" style="transition-delay:0.3s">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">Très à l'écoute de mes attentes. L'itinéraire proposé était original et parfaitement adapté à mon budget. Un service professionnel et chaleureux.</p>
+      <div class="testimonial-author">
+        <strong>Estelle</strong>
+        <span>Chelles</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="contact-info">
+    <span class="section-tag">Nous contacter</span>
+    <h2>Posez-nous<br>une question</h2>
+    <p>Notre équipe est disponible 7j/7 pour répondre à toutes vos questions et vous aider à planifier le voyage parfait.</p>
+
+    <div class="contact-details">
+      <div class="contact-detail"><i class="fas fa-map-marker-alt"></i> 10 Rue des Explorateurs, 75012 Paris</div>
+      <div class="contact-detail"><i class="fas fa-phone"></i> 01.23.45.67.89</div>
+      <div class="contact-detail"><i class="fas fa-envelope"></i> contact@dreamtrip.fr</div>
+      <div class="contact-detail"><i class="fas fa-clock"></i> Support 24h/24, 7j/7</div>
+    </div>
+  </div>
+
+  <div class="contact-form-wrap reveal-right">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nom</label>
+        <input type="text" placeholder="Votre nom">
+      </div>
+      <div class="form-group">
+        <label>Prénom</label>
+        <input type="text" placeholder="Votre prénom">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" placeholder="votre@email.com">
+    </div>
+    <div class="form-group">
+      <label>Message</label>
+      <textarea placeholder="Votre message..."></textarea>
+    </div>
+    <button class="btn-primary" style="width:100%; text-align:center; padding:18px;">Envoyer le message</button>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#hero" class="nav-logo" style="margin-bottom:20px; display:inline-flex;">
+        <div class="nav-logo-icon"><i class="fas fa-globe-europe"></i></div>
+        <span class="nav-logo-text">DreamTrip</span>
+      </a>
+      <p>Votre partenaire de confiance pour des voyages d'exception depuis plus de 10 ans.</p>
+
+    </div>
+
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="#">Paris, France</a></li>
+        <li><a href="#">Bali, Indonésie</a></li>
+        <li><a href="#">New York, USA</a></li>
+        <li><a href="#">Tokyo, Japon</a></li>
+        <li><a href="#">Santorin, Grèce</a></li>
       </ul>
-  
-      <p>© 2021-2025 par Globe Web Agency, agence web spécialisée voyage, SEO - SEA - SMO à Paris</p>
-   </footer>
+    </div>
 
-   <!-- AOS JS -->
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <script>
-      AOS.init({
-      duration: 1000, // durée des animations en ms
-      once: false     
-      });
-   </script>
-  
-   <!-- FAQ JS -->
-   <script>
-     const questions = document.querySelectorAll('.faq-question');
-     questions.forEach(q => {
-     q.addEventListener('click', () => {
-      q.classList.toggle('active');
-      const answer = q.nextElementSibling;
-      if (q.classList.contains('active')) {
-        answer.style.maxHeight = answer.scrollHeight + "px";
-      } else {
-        answer.style.maxHeight = null;
-      }
-     });
-       });
-     </script>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Voyages sur mesure</a></li>
+        <li><a href="#">Location hôtels</a></li>
+        <li><a href="#">Location voitures</a></li>
+        <li><a href="#">Assurance voyage</a></li>
+        <li><a href="#">Circuits guidés</a></li>
+      </ul>
+    </div>
 
-<script>
-function selectDestination(destinationName) {
-  localStorage.setItem('selectedDestination', destinationName);
-  window.location.href = 'reservation.html'; // ✅ Page voyages
-}
+    <div class="footer-col">
+      <h4>Informations</h4>
+      <ul>
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">Politique de cookies</a></li>
+        <li><a href="#">Confidentialité</a></li>
+        <li><a href="#">Conditions d'utilisation</a></li>
+        <li><a href="#">À propos</a></li>
+      </ul>
+    </div>
+  </div>
 
-function selectCar(carName) {
-  localStorage.setItem('selectedCar', carName);
-  window.location.href = 'reservation-voiture.html'; // ✅ Page voitures
-}
-
-function toggleForm() {
-  const form = document.getElementById("reservationForm");
-  if (form) {
-    form.style.display = form.style.display === "none" ? "block" : "none";
-  }
-}
-</script>
-
-
+  <div class="footer-bottom">
+    <p>© 2025 DreamTrip — Tous droits réservés</p>
+    <p>Réalisé avec ♥ par Globe Web Agency, Paris</p>
+  </div>
+</footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const btn = document.getElementById('menu-toggle');
-  const nav = document.querySelector('#nav-menu ul');
-
-  btn.addEventListener('click', function () {
-    nav.classList.toggle('show');
-
-    const isOpen = nav.classList.contains('show');
-    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    btn.textContent = isOpen ? '✕' : '☰';
+  // ─── NAV SCROLL ───
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
   });
-});
+
+  // ─── BURGER ───
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileClose = document.getElementById('mobileClose');
+
+  burgerBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
+  mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+  }
+
+  // ─── FAQ ───
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isActive = btn.classList.contains('active');
+      document.querySelectorAll('.faq-question').forEach(b => {
+        b.classList.remove('active');
+        b.nextElementSibling.style.maxHeight = null;
+      });
+      if (!isActive) {
+        btn.classList.add('active');
+        const ans = btn.nextElementSibling;
+        ans.style.maxHeight = ans.scrollHeight + 'px';
+      }
+    });
+  });
+
+  // ─── SCROLL REVEAL ───
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(el => observer.observe(el));
 </script>
-
-
-
-
-
-
-
-
 
 </body>
 </html>

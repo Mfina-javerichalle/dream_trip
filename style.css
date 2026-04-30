@@ -1176,7 +1176,111 @@ a {
   max-width: 100%;
   border-radius: 10px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}/* ==============================
+   SECTION HÔTELS
+================================ */
+
+/* Variante 1 : Texte gauche / Image droite */
+.hotels {
+  background-color: #ffffff;
 }
+
+.hotel-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 50px;
+  gap: 30px;
+}
+
+.hotel-text {
+  flex: 1 1 300px;
+  padding-right: 30px;
+}
+
+.hotel-text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #0a0a0a;
+}
+
+.hotel-text p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #000;
+}
+
+.hotel-image {
+  flex: 1 1 300px;
+  text-align: right;
+}
+
+.hotel-image img {
+  max-width: 90%;
+  border-radius: 10px;
+  height: auto;
+}
+
+/* Variante 2 : Image gauche / Texte droite */
+.hotel-section.reverse {
+  background-color: white;
+}
+
+.hotel-section.reverse .hotel-image {
+  order: -1;
+  text-align: left;
+}
+
+.hotel-section.reverse .hotel-text {
+  padding-right: 0;
+  padding-left: 30px;
+}
+
+/* ==============================
+   TITRES DE SECTION
+================================ */
+
+.hotels #titre1 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #0a0a0a;
+}
+
+.hotels #titre2 {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 50px;
+  color: #444;
+}
+
+/* ==============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+  .hotel-section,
+  .hotel-section.reverse {
+    flex-direction: column;
+    text-align: center;
+    padding: 50px 25px;
+  }
+
+  .hotel-text,
+  .hotel-section.reverse .hotel-text {
+    padding: 0;
+  }
+
+  .hotel-image {
+    text-align: center;
+  }
+
+  .hotel-image img {
+    max-width: 100%;
+  }
+}
+
 
 /* ========== VOITURES ========== */
 
@@ -1262,18 +1366,6 @@ button:hover,
 
 /* Tablettes (1024px) */
 @media (max-width: 1024px) {
-  .Hôtels-propos,
-  .Hôtel {
-    padding: 40px 30px;
-  }
-
-  .Hôtels-text {
-    padding-right: 20px;
-  }
-
-  .Hôtel-content {
-    gap: 40px;
-  }
 
   .Car {
     padding: 40px 30px;
@@ -1290,54 +1382,6 @@ button:hover,
 
 /* Tablettes portrait / Petits mobiles (768px) */
 @media (max-width: 768px) {
-  .Hôtels-propos {
-    flex-direction: column;
-    text-align: center;
-    padding: 40px 20px;
-    gap: 30px;
-    max-width: 100%;
-  }
-
-  .Hôtels-text {
-    padding-right: 0;
-  }
-
-  .Hôtels-Image {
-    text-align: center;
-  }
-
-  .Hôtels-Image img {
-    max-width: 90%;
-    height: auto;
-  }
-
-  .Hôtels-text h2 {
-    font-size: 2rem;
-  }
-
-  .Hôtel {
-    padding: 40px 20px;
-  }
-
-  .Hôtel-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 30px;
-    max-width: 100%;
-  }
-
-  .Hôtel-content .image {
-    text-align: center;
-  }
-
-  .Hôtel-content .image img {
-    max-width: 90%;
-    height: auto;
-  }
-
-  .Hôtel-content h2 {
-    font-size: 2rem;
-  }
 
   .Car {
     flex-direction: column;
@@ -1375,17 +1419,12 @@ button:hover,
 
 /* Smartphones moyens (600px) */
 @media (max-width: 600px) {
-  .Hôtels-propos,
-  .Hôtel,
+  
   .Car {
     padding: 30px 15px;
   }
 
-  .Hôtels-text h2,
-  .Hôtel-content h2 {
-    font-size: 1.8rem;
-  }
-
+ 
   .text-Car h2 {
     font-size: 1.6rem;
   }
@@ -1406,27 +1445,17 @@ button:hover,
 
 /* Petits smartphones (480px) */
 @media (max-width: 480px) {
-  .Hôtels-propos,
-  .Hôtel {
-    padding: 25px 12px;
-  }
+  
 
   .Car {
     padding: 25px 12px;
   }
-
-  .Hôtels-text p,
-  .Hôtel-content p,
   .text-Car p {
     font-size: 1rem;
     line-height: 1.6;
   }
 
-  .Hôtels-text h2,
-  .Hôtel-content h2 {
-    font-size: 1.6rem;
-  }
-
+  
   .text-Car h2 {
     font-size: 1.4rem;
   }
@@ -1484,10 +1513,6 @@ button:hover,
     font-size: 0.9rem;
   }
 
-  .Hôtels-Image img,
-  .Hôtel-content .image img {
-    max-width: 85%;
-  }
 }
 
 

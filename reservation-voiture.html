@@ -2,538 +2,323 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Réservation de voiture - DreamTrip</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réserver une voiture — DreamTrip</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --gold: #C9A84C; --gold-light: #E8C97A; --cream: #F7F3EE;
+      --dark: #0F0E0B; --dark2: #1A1815; --ink: #2C2A26; --muted: #7A7468; --white: #FFFFFF;
     }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); }
 
-    body {
-      font-family: 'Segoe UI', 'Roboto', sans-serif;
-      background: linear-gradient(to right, #f1f1f1, #e0e0e0);
-      line-height: 1.6;
-      color: #333;
-    }
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 18px 60px; display: flex; align-items: center; justify-content: space-between; background: rgba(15,14,11,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.2); }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo-icon { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 0.9rem; }
+    .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--white); letter-spacing: 2px; }
+    .nav-links { list-style: none; display: flex; gap: 32px; }
+    .nav-links a { text-decoration: none; color: rgba(255,255,255,0.65); font-size: 0.78rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta { background: var(--gold); color: var(--dark) !important; padding: 9px 22px; font-weight: 600 !important; }
+    .nav-cta:hover { background: var(--gold-light) !important; }
+    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+    .burger span { display: block; width: 22px; height: 2px; background: white; }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { text-decoration: none; font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; color: var(--white); transition: color 0.3s; }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-close { position: absolute; top: 28px; right: 32px; font-size: 2rem; color: white; background: none; border: none; cursor: pointer; }
 
-    /* ========== HEADER COMPLET ========== */
-    header {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
+    /* ── HERO ── */
+    .page-hero { height: 42vh; min-height: 300px; background: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat; position: relative; display: flex; align-items: flex-end; }
+    .page-hero::before { content:''; position:absolute; inset:0; background: linear-gradient(to top, rgba(10,9,7,0.88) 0%, rgba(10,9,7,0.3) 100%); }
+    .page-hero-content { position: relative; z-index: 2; padding: 0 80px 56px; }
+    .breadcrumb { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .page-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 300; color: var(--white); }
+    .page-hero-title em { font-style: italic; color: var(--gold-light); }
 
-    header::before {
-      content: "";
-      position: absolute;
-      background: rgba(0, 0, 0, 0.6);
-      inset: 0;
-      z-index: 1;
-    }
+    /* ── CAR PICKER ── */
+    .car-picker-section { padding: 72px 80px 0; max-width: 1300px; margin: 0 auto; }
+    .section-tag { display: inline-block; font-size: 0.68rem; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 400; color: var(--ink); margin-bottom: 48px; }
+    .cars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .car-card { background: var(--white); padding: 32px 24px; text-align: center; border: 2px solid transparent; cursor: pointer; transition: all 0.3s; position: relative; }
+    .car-card:hover { border-color: var(--gold); }
+    .car-card.selected { border-color: var(--gold); background: #fefbf5; }
+    .car-card.selected::after { content: '✓'; position: absolute; top: 14px; right: 16px; width: 24px; height: 24px; background: var(--gold); color: var(--dark); border-radius: 50%; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .car-card img { width: 100%; max-height: 110px; object-fit: contain; margin-bottom: 16px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15)); transition: transform 0.3s; }
+    .car-card:hover img { transform: scale(1.05); }
+    .car-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--ink); }
 
-    .header-inner {
-      position: relative;
-      z-index: 2;
-      padding: 20px 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(10px);
-    }
+    /* ── FORM SECTION ── */
+    .form-section { padding: 60px 80px 100px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; max-width: 1300px; margin: 0 auto; }
+    .form-aside h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400; color: var(--ink); margin-bottom: 16px; line-height: 1.2; }
+    .form-aside p { font-size: 0.95rem; line-height: 1.8; color: var(--muted); margin-bottom: 40px; }
+    .aside-features { display: flex; flex-direction: column; gap: 20px; }
+    .aside-feature { display: flex; align-items: flex-start; gap: 16px; }
+    .aside-feature-icon { width: 44px; height: 44px; background: var(--gold); color: var(--dark); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .aside-feature-text strong { display: block; font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+    .aside-feature-text span { font-size: 0.82rem; color: var(--muted); }
+    .aside-divider { width: 50px; height: 1px; background: var(--gold); margin: 32px 0; }
+    .form-card { background: var(--white); padding: 56px 48px; }
+    .form-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 400; color: var(--ink); margin-bottom: 8px; }
+    .form-card .form-subtitle { font-size: 0.85rem; color: var(--muted); margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid rgba(0,0,0,0.07); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .form-group label { font-size: 0.68rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--ink); }
+    .form-group input, .form-group select { background: var(--cream); border: 1px solid transparent; padding: 14px 18px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--ink); outline: none; transition: border-color 0.3s, background 0.3s; border-radius: 0; appearance: none; }
+    .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23C9A84C' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; cursor: pointer; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--gold); background: var(--white); }
+    .form-group input::placeholder { color: rgba(44,42,38,0.35); }
 
-    .Logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: white;
-    }
+    /* Selected car display */
+    .selected-car-display { background: var(--cream); border: 1px solid rgba(201,168,76,0.3); padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+    .selected-car-display i { color: var(--gold); }
+    .selected-car-display span { font-size: 0.88rem; color: var(--ink); font-weight: 500; }
+    .selected-car-display strong { color: var(--gold); }
 
-    .Logo img {
-      width: 45px;
-      height: 45px;
-    }
+    .btn-submit { width: 100%; background: var(--dark); color: var(--white); padding: 18px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; border: none; cursor: pointer; transition: all 0.3s; margin-top: 8px; }
+    .btn-submit:hover { background: var(--gold); color: var(--dark); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,168,76,0.3); }
+    .form-note { margin-top: 16px; font-size: 0.78rem; color: var(--muted); text-align: center; }
+    .form-note i { color: var(--gold); margin-right: 4px; }
 
-    .Logo-text {
-      font-size: 1.8rem;
-      letter-spacing: 1px;
-      font-weight: 700;
-    }
+    /* ── FOOTER ── */
+    footer { background: var(--dark); padding: 56px 80px 32px; border-top: 1px solid rgba(201,168,76,0.2); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+    .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
 
-    nav ul {
-  display: none;
-  flex-direction: column;
-  background-color: rgba(92, 90, 90, 0.4); /* noir à 50% de transparence */
-  position: absolute;
-  top: 70px;
-  right: 20px;
-  width: 220px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-  border-radius: 8px;
-  padding: 1rem;
-}
-
-    nav li {
-      margin: 0;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 1.1rem;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-
-    nav a:hover {
-      color: #ffd700;
-      transform: translateY(-2px);
-    }
-
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.8rem;
-      cursor: pointer;
-      color: white;
-      padding: 8px;
-      border-radius: 6px;
-      transition: all 0.3s ease;
-    }
-
-    .menu-toggle:hover {
-      background: rgba(255,255,255,0.1);
-      transform: rotate(90deg);
-    }
-
-    /* ========== FORMULAIRE ========== */
-    .Formulaire-container {
-      background: white;
-      padding: 40px 30px;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-      width: 100%;
-      max-width: 550px;
-      margin: 60px auto;
-      position: relative;
-    }
-
-    .Formulaire-container h2 {
-      text-align: center;
-      color: #1a1a1a;
-      margin-bottom: 30px;
-      font-size: 2rem;
-      font-weight: 700;
-    }
-
-    form label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #444;
-      font-size: 0.95rem;
-    }
-
-    form input[type="text"],
-    form input[type="email"],
-    form input[type="tel"],
-    form input[type="date"],
-    form select {
-      width: 100%;
-      padding: 15px 18px;
-      margin-bottom: 20px;
-      border: 2px solid #e1e5e9;
-      border-radius: 12px;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      background: #f8fafc;
-    }
-
-    form input:focus,
-    form select:focus {
-      outline: none;
-      border-color: #00aaff;
-      box-shadow: 0 0 0 4px rgba(0,170,255,0.1);
-      background: white;
-      transform: translateY(-2px);
-    }
-
-    form input[type="submit"] {
-      background: linear-gradient(135deg, #00aaff, #0088cc);
-      color: white;
-      border: none;
-      padding: 18px;
-      width: 100%;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      box-shadow: 0 10px 30px rgba(0,170,255,0.3);
-    }
-
-    form input[type="submit"]:hover {
-      background: linear-gradient(135deg, #e69600, #cc7a00);
-      transform: translateY(-3px);
-      box-shadow: 0 15px 40px rgba(230,150,0,0.4);
-    }
-
-    /* ========== FOOTER ========== */
-    footer {
-      background: #000;
-      color: #fff;
-      text-align: center;
-      padding: 40px 20px;
-      margin-top: 60px;
-    }
-
-    footer p {
-      margin: 12px 0;
-      opacity: 0.9;
-    }
-
-    .social-icons {
-      margin: 20px 0;
-    }
-
-    .social-icons a {
-      margin: 0 15px;
-      color: #fff;
-      text-decoration: none;
-      font-size: 1.3rem;
-      transition: all 0.3s ease;
-    }
-
-    .social-icons a:hover {
-      color: #ffd700;
-      transform: translateY(-3px);
-    }
-
-    .footer-links {
-      list-style: none;
-      padding: 0;
-      margin: 25px 0;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .footer-links a {
-      color: #ccc;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-    }
-
-    .footer-links a:hover {
-      color: #ffd700;
-    }
-
-    /* ========== RESPONSIVE COMPLET ========== */
-    
-    /* Tablettes */
+    /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-      .header-inner {
-        padding: 18px 40px;
-      }
-      
-      .Logo-text {
-        font-size: 1.6rem;
-      }
-      
-      nav ul {
-        gap: 20px;
-      }
-      
-      .Formulaire-container {
-        max-width: 90%;
-        margin: 40px auto;
-        padding: 35px 25px;
-      }
+      nav { padding: 18px 40px; }
+      .page-hero-content { padding: 0 40px 50px; }
+      .car-picker-section { padding: 60px 40px 0; }
+      .form-section { padding: 50px 40px 80px; gap: 50px; }
+      .cars-grid { grid-template-columns: repeat(2, 1fr); }
+      footer { padding: 40px 40px 24px; }
     }
-
-    /* Mobile paysage / Tablettes portrait */
     @media (max-width: 768px) {
-      .header-inner {
-        padding: 15px 20px;
-      }
-
-      /* Burger menu */
-      .menu-toggle {
-        display: block;
-      }
-
-      nav ul {
-        display: none;
-        position: absolute;
-        top: 100%;
-        right: 20px;
-        background: rgba(0,0,0,0.95);
-        flex-direction: column;
-        width: 250px;
-        padding: 20px;
-        border-radius: 0 0 0 15px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        gap: 0;
-      }
-
-      nav ul.show {
-        display: flex;
-      }
-
-      nav li {
-        width: 100%;
-        margin: 8px 0;
-      }
-
-      nav a {
-        padding: 12px 16px;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-      }
-
-      nav a:last-child {
-        border-bottom: none;
-      }
-
-      .Formulaire-container {
-        max-width: 95%;
-        margin: 30px 15px;
-        padding: 30px 20px;
-        border-radius: 15px;
-      }
-
-      .Formulaire-container h2 {
-        font-size: 1.6rem;
-      }
-
-      form input,
-      form select {
-        padding: 14px 16px;
-      }
-    }
-
-    /* Smartphones moyens */
-    @media (max-width: 600px) {
-      .header-inner {
-        padding: 12px 18px;
-      }
-
-      .Logo-text {
-        font-size: 1.4rem;
-      }
-
-      .Logo img {
-        width: 38px;
-        height: 38px;
-      }
-
-      .Formulaire-container {
-        margin: 25px 12px;
-        padding: 25px 18px;
-      }
-
-      .Formulaire-container h2 {
-        font-size: 1.5rem;
-        margin-bottom: 25px;
-      }
-
-      footer {
-        padding: 30px 15px;
-      }
-
-      .footer-links {
-        flex-direction: column;
-        gap: 12px;
-      }
-    }
-
-    /* Petits smartphones */
-    @media (max-width: 480px) {
-      .header-inner {
-        padding: 12px 15px;
-      }
-
-      .menu-toggle {
-        font-size: 1.6rem;
-      }
-
-      nav ul {
-        width: 220px;
-        right: 15px;
-      }
-
-      .Formulaire-container {
-        margin: 20px 10px;
-        padding: 22px 16px;
-        border-radius: 12px;
-      }
-
-      form input,
-      form select {
-        padding: 12px 14px;
-        margin-bottom: 18px;
-      }
-
-      form input[type="submit"] {
-        padding: 16px;
-        font-size: 1rem;
-      }
-    }
-
-    /* Très petits écrans (iPhone SE) */
-    @media (max-width: 360px) {
-      .header-inner {
-        padding: 10px 12px;
-      }
-
-      .Logo-text {
-        font-size: 1.2rem;
-      }
-
-      .Logo img {
-        width: 34px;
-        height: 34px;
-      }
-
-      nav ul {
-        width: 200px;
-        right: 12px;
-      }
-
-      .Formulaire-container {
-        margin: 15px 8px;
-        padding: 20px 14px;
-      }
-
-      .Formulaire-container h2 {
-        font-size: 1.3rem;
-      }
-
-      form label {
-        font-size: 0.9rem;
-      }
-
-      footer {
-        padding: 25px 12px;
-      }
-
-      .social-icons a {
-        font-size: 1.1rem;
-        margin: 0 10px;
-      }
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .burger { display: flex; }
+      .page-hero-content { padding: 0 24px 40px; }
+      .car-picker-section { padding: 50px 24px 0; }
+      .form-section { grid-template-columns: 1fr; padding: 40px 24px 70px; gap: 40px; }
+      .form-card { padding: 36px 28px; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 36px 24px 24px; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header data-aos="zoom-in-right" data-aos-delay="200">
-    <div class="header-inner">
-      <div class="Logo">
-        <img src="https://cdn-icons-png.flaticon.com/512/201/201623.png" alt="Logo DreamTrip" />
-        <strong><span class="Logo-text">DreamTrip</span></strong>
-      </div>
 
-      <!-- Bouton Burger -->
-      <button class="menu-toggle" id="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">
-        ☰
-      </button>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="index.html">Accueil</a>
+  <a href="index.html#destinations">Destinations</a>
+  <a href="reservation.html">Réserver un voyage</a>
+  <a href="index.html#contact">Contact</a>
+</div>
 
-      <!-- Menu principal -->
-      <nav id="nav-menu">
-        <ul>
-          <li><a href="Indes.html">Accueil</a></li>
-          <li><a href="A-propos.html">A propos</a></li>
-          <li><a href="Nos-services.html">Nos Services</a></li>
-          <li><a href="destinations.htm">Destinations</a></li>
-          <li><a href="Nos-chiffres.html">Chiffres clés</a></li>
-          <li><a href="locations.html">Locations Hotel Véhicules</a></li>
-          <li><a href="FAQ.html">FAQ</a></li>
-          <li><a href="temoignages.html">Témoignages</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon"><i class="fas fa-globe-europe"></i></div>
+    <span class="nav-logo-text">DreamTrip</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#apropos">À Propos</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#destinations">Destinations</a></li>
+    <li><a href="index.html#hotels">Hôtels</a></li>
+    <li><a href="reservation-voiture.html">Voitures</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="reservation.html" class="nav-cta">Réserver</a></li>
+  </ul>
+  <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- Hero -->
+<div class="page-hero">
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Accueil</a> &nbsp;/&nbsp; Location voiture</div>
+    <h1 class="page-hero-title">Louez votre <em>voiture</em></h1>
+  </div>
+</div>
+
+<!-- Car Picker -->
+<div class="car-picker-section">
+  <span class="section-tag">Choisissez votre véhicule</span>
+  <h2 class="section-title">Nos véhicules disponibles</h2>
+
+  <div class="cars-grid" id="carsGrid">
+    <div class="car-card" data-car="Renault Clio" onclick="selectCar(this)">
+      <img src="https://www.pngmart.com/files/22/Renault-CLIO-PNG-HD.png" alt="Renault Clio">
+      <h4>Renault Clio</h4>
     </div>
-  </header>
+    <div class="car-card" data-car="Peugeot 3008" onclick="selectCar(this)">
+      <img src="https://autode-static.de/wp-content/uploads/2018/12/peugeot_124008suv_1b_lowaggressive-1024x680.png" alt="Peugeot 3008">
+      <h4>Peugeot 3008</h4>
+    </div>
+    <div class="car-card" data-car="Fiat 500" onclick="selectCar(this)">
+      <img src="https://www.pngmart.com/files/22/Fiat-500-PNG-Isolated-HD.png" alt="Fiat 500">
+      <h4>Fiat 500</h4>
+    </div>
+    <div class="car-card" data-car="Volkswagen Polo" onclick="selectCar(this)">
+      <img src="https://wallpapers.com/images/hd/volkswagen-polo-hatchback-png-06232024-v0ust8hq24wpsxy4.png" alt="Volkswagen Polo">
+      <h4>Volkswagen Polo</h4>
+    </div>
+    <div class="car-card" data-car="Toyota Yaris" onclick="selectCar(this)">
+      <img src="https://www.seekpng.com/png/full/252-2526739_toyota-yaris-front-png.png" alt="Toyota Yaris">
+      <h4>Toyota Yaris</h4>
+    </div>
+    <div class="car-card" data-car="Ford Kuga" onclick="selectCar(this)">
+      <img src="https://www.pngplay.com/wp-content/uploads/13/Ford-Kuga-PNG-Images-HD.png" alt="Ford Kuga">
+      <h4>Ford Kuga</h4>
+    </div>
+  </div>
+</div>
 
-  <!-- FORMULAIRE -->
-  <div class="Formulaire-container">
-    <h2>Réservez votre voiture</h2>
-    <form action="#" method="post">
-      <label for="nom">Nom complet :</label>
-      <input type="text" id="nom" name="nom" required>
-
-      <label for="email">Email :</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="telephone">Téléphone :</label>
-      <input type="tel" id="telephone" name="telephone" required>
-
-      <label for="voiture">Modèle de voiture :</label>
-      <select id="voiture" name="voiture" required>
-        <option value="Renault Clio">Renault Clio</option>
-        <option value="Peugeot 3008">Peugeot 3008</option>
-        <option value="Fiat 500">Fiat 500</option>
-        <option value="Volkswagen Polo">Volkswagen Polo</option>
-        <option value="Toyota Yaris">Toyota Yaris</option>
-        <option value="Ford Kuga">Ford Kuga</option>
-      </select>
-
-      <label for="date">Date de réservation :</label>
-      <input type="date" id="date" name="date" required>
-
-      <input type="submit" value="Valider la commande">
-    </form>
+<!-- Form -->
+<div class="form-section">
+  <div class="form-aside">
+    <h2>Votre liberté sur la route</h2>
+    <p>Sélectionnez le véhicule de votre choix ci-dessus, puis complétez le formulaire pour finaliser votre location en toute simplicité.</p>
+    <div class="aside-divider"></div>
+    <div class="aside-features">
+      <div class="aside-feature">
+        <div class="aside-feature-icon"><i class="fas fa-car"></i></div>
+        <div class="aside-feature-text">
+          <strong>Véhicules récents</strong>
+          <span>Flotte entretenue et assurée tous risques</span>
+        </div>
+      </div>
+      <div class="aside-feature">
+        <div class="aside-feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="aside-feature-text">
+          <strong>Récupération flexible</strong>
+          <span>Aéroport, hôtel ou agence en ville</span>
+        </div>
+      </div>
+      <div class="aside-feature">
+        <div class="aside-feature-icon"><i class="fas fa-gas-pump"></i></div>
+        <div class="aside-feature-text">
+          <strong>Carburant inclus</strong>
+          <span>Retour avec le même niveau de carburant</span>
+        </div>
+      </div>
+      <div class="aside-feature">
+        <div class="aside-feature-icon"><i class="fas fa-phone"></i></div>
+        <div class="aside-feature-text">
+          <strong>Assistance routière 24h</strong>
+          <span>En cas de panne, nous intervenons rapidement</span>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>Voyage Évasion, 10 Rue des Explorateurs, 75012 Paris. Tél : 01.23.45.67.89</p>
-    
-    <div class="social-icons">
-      <a href="https://www.facebook.com/voyageevasion" target="_blank" aria-label="Facebook">🌐</a>
-      <a href="https://www.instagram.com/voyageevasion" target="_blank" aria-label="Instagram">📸</a>
+  <div class="form-card">
+    <h3>Informations de location</h3>
+    <p class="form-subtitle">Complétez les champs pour confirmer votre réservation</p>
+
+    <div class="selected-car-display" id="selectedCarDisplay" style="display:none;">
+      <i class="fas fa-check-circle"></i>
+      <span>Véhicule sélectionné : <strong id="selectedCarName">—</strong></span>
     </div>
-    
-    <ul class="footer-links">
-      <li><a href="/mentions-legales.html">Mentions légales</a></li>
-      <li><a href="/politique-cookies.html">Politique de cookies</a></li>
-      <li><a href="/confidentialite.html">Politique de confidentialité</a></li>
-      <li><a href="/conditions-utilisation.html">Conditions d'utilisation</a></li>
-    </ul>
 
-    <p>© 2021-2026 par Globe Web Agency, agence web spécialisée voyage, SEO - SEA - SMO à Paris</p>
-  </footer>
+    <form action="Validation.html" method="get">
+      <input type="hidden" name="type" value="voiture">
 
-  <!-- JAVASCRIPT MENU BURGER + AUTO-SELECT -->
-  <script>
-    // Menu burger
-    document.addEventListener('DOMContentLoaded', function() {
-      const btn = document.getElementById('menu-toggle');
-      const nav = document.querySelector('#nav-menu ul');
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nom</label>
+          <input type="text" name="nom" placeholder="Dupont" required>
+        </div>
+        <div class="form-group">
+          <label>Prénom</label>
+          <input type="text" name="prenom" placeholder="Marie" required>
+        </div>
+      </div>
 
-      btn.addEventListener('click', function() {
-        nav.classList.toggle('show');
-        const isOpen = nav.classList.contains('show');
-        btn.setAttribute('aria-expanded', isOpen);
-        btn.textContent = isOpen ? '✕' : '☰';
-      });
-    });
+      <div class="form-group">
+        <label>Adresse email</label>
+        <input type="email" name="email" placeholder="marie.dupont@email.com" required>
+      </div>
 
-    // Auto-sélection voiture
-    window.onload = function () {
-      const selectedCar = localStorage.getItem("selectedCar");
-      if (selectedCar) {
-        const selectElement = document.getElementById("voiture");
-        selectElement.value = selectedCar;
-        localStorage.removeItem("selectedCar");
-      }
-    };
-  </script>
+      <div class="form-group">
+        <label>Téléphone</label>
+        <input type="tel" name="telephone" placeholder="+33 6 00 00 00 00" required>
+      </div>
+
+      <div class="form-group">
+        <label>Modèle de voiture</label>
+        <select name="voiture" id="voitureSelect" required>
+          <option value="">— Choisissez ou sélectionnez ci-dessus —</option>
+          <option value="Renault Clio">Renault Clio</option>
+          <option value="Peugeot 3008">Peugeot 3008</option>
+          <option value="Fiat 500">Fiat 500</option>
+          <option value="Volkswagen Polo">Volkswagen Polo</option>
+          <option value="Toyota Yaris">Toyota Yaris</option>
+          <option value="Ford Kuga">Ford Kuga</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Date de prise en charge</label>
+          <input type="date" name="date_debut" required>
+        </div>
+        <div class="form-group">
+          <label>Date de restitution</label>
+          <input type="date" name="date_fin" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Confirmer ma location</button>
+      <p class="form-note"><i class="fas fa-lock"></i> Réservation sécurisée — Confirmation immédiate par email</p>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <p>© 2025 DreamTrip — Tous droits réservés</p>
+    <p><a href="index.html">← Retour à l'accueil</a></p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('burgerBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('open'));
+  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
+
+  function selectCar(card) {
+    document.querySelectorAll('.car-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    const carName = card.dataset.car;
+    document.getElementById('voitureSelect').value = carName;
+    document.getElementById('selectedCarName').textContent = carName;
+    document.getElementById('selectedCarDisplay').style.display = 'flex';
+    document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('selectedCar');
+    if (saved) {
+      const card = document.querySelector(`[data-car="${saved}"]`);
+      if (card) selectCar(card);
+      localStorage.removeItem('selectedCar');
+    }
+  });
+</script>
 </body>
 </html>
